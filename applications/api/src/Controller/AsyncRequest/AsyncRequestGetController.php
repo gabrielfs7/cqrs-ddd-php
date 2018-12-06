@@ -16,8 +16,10 @@ final class AsyncRequestGetController
     private $asyncRequestFinder;
     private $exceptionHandler;
 
-    public function __construct(AsyncRequestFinder $asyncRequestFinder, ApiExceptionsHttpStatusCodeMapping $exceptionHandler)
-    {
+    public function __construct(
+        AsyncRequestFinder $asyncRequestFinder,
+        ApiExceptionsHttpStatusCodeMapping $exceptionHandler
+    ) {
         $this->asyncRequestFinder = $asyncRequestFinder;
         $this->exceptionHandler   = $exceptionHandler;
 

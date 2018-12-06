@@ -8,6 +8,7 @@ use InvalidArgumentException;
 
 final class EmailAddress
 {
+    /** @var string */
     private $value;
 
     public function __construct(string $value)
@@ -17,7 +18,7 @@ final class EmailAddress
         $this->value = $value;
     }
 
-    private function guard(string $value)
+    private function guard(string $value): void
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(sprintf('The email <%s> is not valid'));

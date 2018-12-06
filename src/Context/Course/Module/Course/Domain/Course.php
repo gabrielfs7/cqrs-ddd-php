@@ -9,8 +9,13 @@ use CodelyTv\Shared\Domain\CourseId;
 
 final class Course extends AggregateRoot
 {
+    /** @var CourseId */
     private $id;
+
+    /** @var CourseTitle */
     private $title;
+
+    /** @var CourseDescription */
     private $description;
 
     private function __construct(CourseId $id, CourseTitle $title, CourseDescription $description)

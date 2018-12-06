@@ -6,6 +6,7 @@ namespace CodelyTv\Shared\Domain\ValueObject;
 
 abstract class StringValueObject
 {
+    /** @var string */
     protected $value;
 
     public function __construct(string $value)
@@ -13,12 +14,12 @@ abstract class StringValueObject
         $this->value = $value;
     }
 
-    public function value()
+    public function value(): string
     {
         return $this->value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value();
     }

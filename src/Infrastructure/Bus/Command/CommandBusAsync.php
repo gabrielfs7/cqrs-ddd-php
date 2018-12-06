@@ -20,6 +20,9 @@ final class CommandBusAsync implements CommandBus
 
     public function dispatch(Command $command): void
     {
-        file_put_contents($this->pendingRequestsFilePath, apply(new MessageSerializer(), [$command]));
+        file_put_contents(
+            $this->pendingRequestsFilePath,
+            apply(new MessageSerializer(), [$command])
+        );
     }
 }
