@@ -1,0 +1,10 @@
+imports:
+  - { resource: controllers/_controllers.yml }
+  - { resource: commands/commands.yml }
+  - { resource: rest/_rest.yml }
+  - { resource: logs.yml }
+  - { resource: symfony.yml }
+
+
+framework:
+  secret: 'secret'
