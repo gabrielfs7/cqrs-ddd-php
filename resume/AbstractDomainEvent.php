@@ -1,4 +1,4 @@
-<?php declare(strict_types=true);
+<?php declare(strict_types=1);
 
 abstract class AbstractDomainEvent
 {
@@ -22,7 +22,7 @@ abstract class AbstractDomainEvent
     ) {
         $this->data = $data;
         $this->aggregateRootId = $aggregateRootId;
-        $this->eventId = $eventId ?? self::name()  . '_' . uniqid();
+        $this->eventId = $eventId ?? static::name()  . '_' . uniqid();
         $this->occurredAt = $occurredAt ?: new DateTimeImmutable();
     }
 

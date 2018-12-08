@@ -1,4 +1,4 @@
-<?php declare(strict_types=true);
+<?php declare(strict_types=1);
 
 class User extends AbstractAggregateRoot
 {
@@ -29,7 +29,7 @@ class User extends AbstractAggregateRoot
         $user = new self($id, $username);
         $user->record(
             new CreateUserDomainEvent(
-                $id,
+                $id->value(),
                 [
                     'id' => $id->value(),
                     'username' => $username->value(),

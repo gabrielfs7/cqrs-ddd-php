@@ -1,4 +1,4 @@
-<?php declare(strict_types=true);
+<?php declare(strict_types=1);
 
 class UserId
 {

@@ -32,3 +32,16 @@ The main terms used here are technically (and VERY shortly) explained above:
   - Interacts with factories, repositories and entities to perform domain tasks.
   - Ideally should contain few (or better, just one) methods.
   - Follow Single Responsibility principle.
+  
+- **Command:**
+  - Perform the write persistence tasks.
+  - Command must not return any value, they are stateless.
+    - **Command Handler:**
+    - Receives command and perform actions with its payload. 
+  
+- **Query:**
+  - Perform the read persistence tasks.
+  - After you excute a command, you can use a query to watch its result.
+    
+- **Event Publisher:**
+  - Publish all aggregate root events.

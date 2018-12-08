@@ -1,12 +1,27 @@
-<?php declare(strict_types=true);
+<?php declare(strict_types=1);
 
 class UserCreator
 {
-    public function create(UserId $id, Username $username): User
+    /** @var UserRepository */
+    private $userRepository;
+
+    /** @var UserDomainEventPublisher */
+    private $userDomainEventPublisher;
+
+    public function __construct(
+        UserRepository $userRepository,
+        UserDomainEventPublisher $userDomainEventPublisher
+    ) {
+        $this->userRepository = $userRepository;
+        $this->userDomainEventPublisher = $userDomainEventPublisher;
+    }
+
+    public function create(UserId $id, Username $username): void
     {
         $user = User::create($id, $username);
 
-        //@TODO call repository...
-        //@TODO call event publisher...
+        $this->userRepository->save($user);
+
+        $this->userDomainEventPublisher->publish(...$user->pullDomainEvents());
     }
 }
