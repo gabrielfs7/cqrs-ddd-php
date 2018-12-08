@@ -1,5 +1,13 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Service;
+
+use Sample\Entity\User;
+use Sample\Event\UserDomainEventPublisher;
+use Sample\Repository\UserRepository;
+use Sample\ValueObject\UserId;
+use Sample\ValueObject\Username;
+
 class UserCreator
 {
     /** @var UserRepository */

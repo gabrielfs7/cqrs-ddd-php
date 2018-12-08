@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Command;
+
 class CreateUserCommand
 {
     /** @var string */

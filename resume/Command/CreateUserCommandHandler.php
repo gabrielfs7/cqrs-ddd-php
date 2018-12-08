@@ -1,5 +1,11 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Command;
+
+use Sample\Service\UserCreator;
+use Sample\ValueObject\UserId;
+use Sample\ValueObject\Username;
+
 class CreateUserCommandHandler
 {
     /** @var UserCreator */

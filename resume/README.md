@@ -42,6 +42,8 @@ The main terms used here are technically (and VERY shortly) explained above:
 - **Query:**
   - Perform the read persistence tasks.
   - After you excute a command, you can use a query to watch its result.
+    - **Query Handler**
+    - Use repositories, webservices or any other storage layer to query the entities.
     
 - **Event Publisher:**
   - Publish all aggregate root events.

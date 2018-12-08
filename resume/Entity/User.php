@@ -1,5 +1,11 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Entity;
+
+use Sample\Event\CreateUserDomainEvent;
+use Sample\ValueObject\UserId;
+use Sample\ValueObject\Username;
+
 class User extends AbstractAggregateRoot
 {
     /** @var UserId */

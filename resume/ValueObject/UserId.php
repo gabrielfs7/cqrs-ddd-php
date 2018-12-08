@@ -1,18 +1,20 @@
 <?php declare(strict_types=1);
 
-class Username
+namespace Sample\ValueObject;
+
+class UserId
 {
     /** @var string */
-    private $name;
+    private $id;
 
-    public function __construct(string $name)
+    public function __construct(string $id = null)
     {
-        $this->name = $name;
+        $this->id = $id ?? uniqid();
     }
 
     public function value(): string
     {
-        return $this->name;
+        return $this->id;
     }
 
     public function __toString(): string

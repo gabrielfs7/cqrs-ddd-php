@@ -1,5 +1,10 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Event;
+
+use DateTimeImmutable;
+use DateTimeInterface;
+
 abstract class AbstractDomainEvent
 {
     /** @var string */

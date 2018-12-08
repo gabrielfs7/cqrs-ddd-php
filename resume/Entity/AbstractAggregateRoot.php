@@ -1,5 +1,9 @@
 <?php declare(strict_types=1);
 
+namespace Sample\Entity;
+
+use Sample\Event\AbstractDomainEvent;
+
 class AbstractAggregateRoot
 {
     /** @var array */
