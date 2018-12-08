@@ -9,6 +9,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 
 class Uuid
 {
+    /** @var string */
     private $value;
 
     public function __construct(string $value)
@@ -32,12 +33,16 @@ class Uuid
     {
         if (!RamseyUuid::isValid($id)) {
             throw new InvalidArgumentException(
-                sprintf('<%s> does not allow the value <%s>.', static::class, is_scalar($id) ? $id : gettype($id))
+                sprintf(
+                    '<%s> does not allow the value <%s>.',
+                    static::class,
+                    is_scalar($id) ? $id : gettype($id)
+                )
             );
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value();
     }
