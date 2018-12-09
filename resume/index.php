@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Sample\Command\CommandBus;
 use Sample\Command\CreateUserCommand;
 use Sample\Command\CreateUserCommandHandler;
 use Sample\Event\UserDomainEventPublisher;
@@ -29,8 +30,12 @@ spl_autoload_register(
 $userDomainEventPublisher = new UserDomainEventPublisher();
 $userRepository = new UserRepository();
 $userCreator = new UserCreator($userRepository, $userDomainEventPublisher);
-$commandHandler = new CreateUserCommandHandler($userCreator);
 $queryHandler = new FindUserQueryHandler($userRepository);
+
+$commandHandler = new CreateUserCommandHandler($userCreator);
+
+$commandBus = new CommandBus();
+$commandBus->registerHandler($commandHandler);
 
 #
 # Register the commands to create users
@@ -43,10 +48,10 @@ $command4 = new CreateUserCommand(uniqid(), '4', 'Julie West');
 #
 # Handle commands
 #
-$commandHandler($command1);
-$commandHandler($command2);
-$commandHandler($command3);
-$commandHandler($command4);
+$commandBus->dispatch($command1);
+$commandBus->dispatch($command2);
+$commandBus->dispatch($command3);
+$commandBus->dispatch($command4);
 
 #
 # Execute query
