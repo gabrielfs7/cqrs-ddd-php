@@ -5,7 +5,7 @@ namespace Sample\Event;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-abstract class AbstractDomainEvent
+abstract class AbstractDomainEvent implements DomainEventInterface
 {
     /** @var string */
     private $eventId;
@@ -30,8 +30,6 @@ abstract class AbstractDomainEvent
         $this->eventId = $eventId ?? static::name()  . '_' . uniqid();
         $this->occurredAt = $occurredAt ?: new DateTimeImmutable();
     }
-
-    abstract public static function name(): string;
 
     public function eventId(): string
     {

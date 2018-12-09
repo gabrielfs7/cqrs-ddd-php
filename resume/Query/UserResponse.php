@@ -2,14 +2,11 @@
 
 namespace Sample\Query;
 
-use function Lambdish\Phunctional\first;
 use Sample\Entity\User;
 
-class UserResponse
+final class UserResponse implements QueueResponseInterface
 {
-    /**
-     * @var User[]
-     */
+    /** @var User[] */
     private $users;
 
     public function __construct(?User ...$users)
@@ -24,6 +21,6 @@ class UserResponse
 
     public function user(): ?User
     {
-        return first($this->users) ?? null;
+        return current($this->users) ?? null;
     }
 }

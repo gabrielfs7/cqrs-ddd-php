@@ -2,7 +2,7 @@
 
 namespace Sample\Command;
 
-class CreateUserCommand
+final class CreateUserCommand implements CommandInterface
 {
     /** @var string */
     private $id;

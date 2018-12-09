@@ -6,7 +6,7 @@ use Sample\Event\CreateUserDomainEvent;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 
-class User extends AbstractAggregateRoot
+final class User extends AbstractAggregateRoot
 {
     /** @var UserId */
     private $id;

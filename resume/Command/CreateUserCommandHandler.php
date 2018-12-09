@@ -6,7 +6,7 @@ use Sample\Service\UserCreator;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 
-class CreateUserCommandHandler
+final class CreateUserCommandHandler
 {
     /** @var UserCreator */
     private $userCreator;

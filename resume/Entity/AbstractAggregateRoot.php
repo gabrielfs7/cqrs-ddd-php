@@ -4,7 +4,7 @@ namespace Sample\Entity;
 
 use Sample\Event\AbstractDomainEvent;
 
-class AbstractAggregateRoot
+class AbstractAggregateRoot implements AggregateRootInterface
 {
     /** @var array */
     private $domainEvents;

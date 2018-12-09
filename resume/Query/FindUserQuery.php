@@ -2,7 +2,7 @@
 
 namespace Sample\Query;
 
-class FindUserQuery
+class FindUserQuery implements QueryInterface
 {
     /** @var string */
     private $id;
