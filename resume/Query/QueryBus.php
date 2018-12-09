@@ -4,9 +4,9 @@ namespace Sample\Query;
 
 final class QueryBus
 {
-    public function ask(QueryInterface $query): QueueResponseInterface
+    public function ask(QueryInterface $query): QueryResponseInterface
     {
         //@TODO Implement...
-        return new UserResponse(null);
+        return new UserQueryResponse(null);
     }
 }

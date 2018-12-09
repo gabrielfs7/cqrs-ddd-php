@@ -5,7 +5,7 @@ namespace Sample\Query;
 use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserId;
 
-class FindUserQueryHandler
+class FindUserQueryHandler implements QueryHandlerInterface
 {
     /** @var UserRepository */
     private $userRepository;
@@ -15,10 +15,13 @@ class FindUserQueryHandler
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(FindUserQuery $query): UserResponse
+    /**
+     * @param QueryInterface|FindUserQuery $query
+     */
+    public function __invoke(QueryInterface $query): QueryResponseInterface
     {
         $user = $this->userRepository->find(new UserId($query->id()));
 
-        return new UserResponse(...[$user]);
+        return new UserQueryResponse(...[$user]);
     }
 }

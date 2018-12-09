@@ -2,10 +2,22 @@
 
 namespace Sample\Command;
 
-final class CommandBus
+final class CommandBus implements CommandBusInterface
 {
+    /** @var CommandHandlerInterface[] */
+    private $commandHandlers = [];
+
+    public function registerHandler(CommandHandlerInterface $commandHandler): void
+    {
+        $this->commandHandlers[] = $commandHandler;
+    }
+
     public function dispatch(CommandInterface $command): void
     {
-        //@TODO Implement...
+        foreach ($this->commandHandlers as $commandHandler) {
+            if ($commandHandler->canHandle($command)) {
+                $commandHandler($command);
+            }
+        }
     }
 }

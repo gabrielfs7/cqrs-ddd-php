@@ -6,7 +6,7 @@ use Sample\Service\UserCreator;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 
-final class CreateUserCommandHandler
+final class CreateUserCommandHandler implements CommandHandlerInterface
 {
     /** @var UserCreator */
     private $userCreator;
@@ -16,11 +16,16 @@ final class CreateUserCommandHandler
         $this->userCreator = $userCreator;
     }
 
-    public function __invoke(CreateUserCommand $createUserCommand): void
+    public function __invoke(CommandInterface $command): void
     {
         $this->userCreator->create(
-            new UserId($createUserCommand->userId()),
-            new Username($createUserCommand->username())
+            new UserId($command->userId()),
+            new Username($command->username())
         );
+    }
+
+    public function canHandle(CommandInterface $command): bool
+    {
+        return $command instanceof CreateUserCommand;
     }
 }

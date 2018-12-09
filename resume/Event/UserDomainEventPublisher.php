@@ -2,9 +2,9 @@
 
 namespace Sample\Event;
 
-class UserDomainEventPublisher
+class UserDomainEventPublisher implements DomainEventPublisherInterface
 {
-    public function publish(AbstractDomainEvent ...$domainEvents): void
+    public function publish(DomainEventInterface ...$domainEvents): void
     {
         //@TODO Implement publish event...
     }

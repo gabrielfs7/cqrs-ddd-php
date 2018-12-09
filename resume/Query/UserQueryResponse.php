@@ -4,7 +4,7 @@ namespace Sample\Query;
 
 use Sample\Entity\User;
 
-final class UserResponse implements QueueResponseInterface
+final class UserQueryResponse implements QueryResponseInterface
 {
     /** @var User[] */
     private $users;
