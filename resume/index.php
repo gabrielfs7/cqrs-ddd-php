@@ -6,6 +6,7 @@ use Sample\Command\CreateUserCommandHandler;
 use Sample\Event\UserDomainEventPublisher;
 use Sample\Query\FindUserQuery;
 use Sample\Query\FindUserQueryHandler;
+use Sample\Query\QueryBus;
 use Sample\Repository\UserRepository;
 use Sample\Service\UserCreator;
 
@@ -33,9 +34,13 @@ $userCreator = new UserCreator($userRepository, $userDomainEventPublisher);
 $queryHandler = new FindUserQueryHandler($userRepository);
 
 $commandHandler = new CreateUserCommandHandler($userCreator);
+$queryHandler = new FindUserQueryHandler($userRepository);
 
 $commandBus = new CommandBus();
 $commandBus->registerHandler($commandHandler);
+
+$queryBus = new QueryBus();
+$queryBus->registerHandler($queryHandler);
 
 #
 # Register the commands to create users
@@ -65,11 +70,11 @@ $userQuery4 = new FindUserQuery('4');
 # Handle query
 #
 echo PHP_EOL;
-var_export($queryHandler($userQuery1));
+var_export($queryBus->ask($userQuery1));
 echo PHP_EOL;
-var_export($queryHandler($userQuery2));
+var_export($queryBus->ask($userQuery2));
 echo PHP_EOL;
-var_export($queryHandler($userQuery3));
+var_export($queryBus->ask($userQuery3));
 echo PHP_EOL;
-var_export($queryHandler($userQuery4));
+var_export($queryBus->ask($userQuery4));
 echo PHP_EOL;

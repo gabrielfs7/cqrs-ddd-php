@@ -24,4 +24,9 @@ class FindUserQueryHandler implements QueryHandlerInterface
 
         return new UserQueryResponse(...[$user]);
     }
+
+    public function canHandle(QueryInterface $query): bool
+    {
+        return $query instanceof FindUserQuery;
+    }
 }
