@@ -8,6 +8,7 @@ The goal is to understand these terminologies, not to use cutting edge framework
 I kept the code as simple as possible. It is totally framework independent and its intent is to 
 explain this approach. 
 
+![CQRS Simple](plantuml/cqrs.png "CQRS Simple")
 
 ## DDD + CQRS terms:
 
