@@ -3,7 +3,8 @@
 use Sample\Command\CommandBus;
 use Sample\Command\CreateUserCommand;
 use Sample\Command\CreateUserCommandHandler;
-use Sample\Event\UserDomainEventPublisher;
+use Sample\Event\EventBus;
+use Sample\Event\UserEventPublisher;
 use Sample\Query\FindUserQuery;
 use Sample\Query\FindUserQueryHandler;
 use Sample\Query\QueryBus;
@@ -12,7 +13,8 @@ use Sample\Service\UserCreator;
 
 require_once 'autoload.php';
 
-$userDomainEventPublisher = new UserDomainEventPublisher();
+$domainEventBus = new EventBus();
+$userDomainEventPublisher = new UserEventPublisher($domainEventBus);
 $userRepository = new UserRepository();
 $userCreator = new UserCreator($userRepository, $userDomainEventPublisher);
 

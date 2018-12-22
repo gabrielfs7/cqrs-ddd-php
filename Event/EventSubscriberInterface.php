@@ -2,7 +2,7 @@
 
 namespace Sample\Event;
 
-interface DomainEventSubscriberInterface
+interface EventSubscriberInterface
 {
     public function subscribedTo(): array;
 }

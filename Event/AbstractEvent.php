@@ -5,7 +5,7 @@ namespace Sample\Event;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-abstract class AbstractDomainEvent implements DomainEventInterface
+abstract class AbstractEvent implements EventInterface
 {
     /** @var string */
     private $eventId;

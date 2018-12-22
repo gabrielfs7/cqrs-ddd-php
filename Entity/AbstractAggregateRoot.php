@@ -2,7 +2,7 @@
 
 namespace Sample\Entity;
 
-use Sample\Event\AbstractDomainEvent;
+use Sample\Event\AbstractEvent;
 
 class AbstractAggregateRoot implements AggregateRootInterface
 {
@@ -18,7 +18,7 @@ class AbstractAggregateRoot implements AggregateRootInterface
         return $domainEvents;
     }
 
-    final protected function record(AbstractDomainEvent $domainEvent): void
+    final protected function record(AbstractEvent $domainEvent): void
     {
         $this->domainEvents[] = $domainEvent;
     }

@@ -2,7 +2,7 @@
 
 namespace Sample\Event;
 
-class CreateUserDomainEvent extends AbstractDomainEvent
+class CreateUserEvent extends AbstractEvent
 {
     public static function name(): string
     {

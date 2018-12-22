@@ -3,7 +3,7 @@
 namespace Sample\Service;
 
 use Sample\Entity\User;
-use Sample\Event\UserDomainEventPublisher;
+use Sample\Event\UserEventPublisher;
 use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
@@ -13,12 +13,12 @@ class UserCreator
     /** @var UserRepository */
     private $userRepository;
 
-    /** @var UserDomainEventPublisher */
+    /** @var UserEventPublisher */
     private $userDomainEventPublisher;
 
     public function __construct(
         UserRepository $userRepository,
-        UserDomainEventPublisher $userDomainEventPublisher
+        UserEventPublisher $userDomainEventPublisher
     ) {
         $this->userRepository = $userRepository;
         $this->userDomainEventPublisher = $userDomainEventPublisher;

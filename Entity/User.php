@@ -2,7 +2,7 @@
 
 namespace Sample\Entity;
 
-use Sample\Event\CreateUserDomainEvent;
+use Sample\Event\CreateUserEvent;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 
@@ -34,7 +34,7 @@ final class User extends AbstractAggregateRoot
     {
         $user = new self($id, $username);
         $user->record(
-            new CreateUserDomainEvent(
+            new CreateUserEvent(
                 $id->value(),
                 [
                     'id' => $id->value(),

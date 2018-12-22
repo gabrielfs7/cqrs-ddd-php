@@ -4,7 +4,7 @@ namespace Sample\Event;
 
 use DateTimeInterface;
 
-interface DomainEventInterface
+interface EventInterface
 {
     public static function name(): string;
 
