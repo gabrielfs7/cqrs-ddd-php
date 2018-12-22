@@ -2,6 +2,8 @@
 
 namespace Sample\Entity;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Sample\Event\CreateUserEvent;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
@@ -14,10 +16,14 @@ final class User extends AbstractAggregateRoot
     /** @var Username */
     private $username;
 
+    /** @var DateTimeInterface */
+    private $createdAt;
+
     private function __construct(UserId $id, Username $username)
     {
         $this->id = $id;
         $this->username = $username;
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function id(): UserId
@@ -28,6 +34,11 @@ final class User extends AbstractAggregateRoot
     public function username(): Username
     {
         return $this->username;
+    }
+
+    public function createAt(): DateTimeInterface
+    {
+        return $this->createdAt;
     }
 
     public static function create(UserId $id, Username $username): User

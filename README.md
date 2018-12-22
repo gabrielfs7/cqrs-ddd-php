@@ -68,3 +68,6 @@ The main terms used here are technically (and VERY shortly) explained above:
     
 - **Event Publisher:**
   - Publish all aggregate root events.
+  
+- **Projector**
+  - Handles the events and store relevant information to support application.
