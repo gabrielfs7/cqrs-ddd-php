@@ -21,6 +21,13 @@ of the subject. If you wish to know the state of the object, use a **Query** for
 
 ## DDD and CQRS
 
+1. Incoming user requests to UI.
+2. Commands are created and feed CommandBus.
+3. CommandBus calls handles which talk to Domain.
+4. Domain produces events.
+5. Events are stored and dispatched.
+6. Projections are built to fast query.
+
 ![CQRS Complex](plantuml/cqrs-complex.png "CQRS Complex")
 
 ## DDD + CQRS terms:
@@ -70,4 +77,5 @@ The main terms used here are technically (and VERY shortly) explained above:
   - Publish all aggregate root events.
   
 - **Projector**
-  - Handles the events and store relevant information to support application.
+  - Handles the events and store relevant information to support application query.
+  - They are generally used for fast Query.
