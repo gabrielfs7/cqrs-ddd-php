@@ -1,0 +1,25 @@
+@startuml
+
+collections Query #99FF99
+collections Command #99FF99
+database Persistence #FFE5CC
+collections UserInterface #CCFFE5
+collections Services #CCE5FF
+collections Projectors #CCE5FF
+collections CommandHandlers #CCE5FF
+database EventStore #FFE5CC
+collections Event #CCE5FF
+collections Domain #CCFFE5
+
+UserInterface -- Command
+UserInterface -- Query
+Query -- Persistence
+Persistence -- Projectors
+Command -- CommandHandlers
+CommandHandlers -- Domain
+Domain -- Services
+Services -- Event
+Event -- EventStore
+Event -- Projectors
+
+@enduml

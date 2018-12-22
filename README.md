@@ -8,7 +8,20 @@ The goal is to understand these terminologies, not to use cutting edge framework
 I kept the code as simple as possible. It is totally framework independent and its intent is to 
 explain this approach. 
 
+## Command & Query separation
+
+Basically as **rule of thumb**: "_A method MUST update the state of the subject OR 
+return the subject, but NEVER do both_".
+
+Accept the subject as an object or entity (i.e. Product, Customer, Stock, etc.). So 
+if you need to update this object you create a **Command** which does not return the current state
+of the subject. If you wish to know the state of the object, use a **Query** for this. 
+
 ![CQRS Simple](plantuml/cqrs.png "CQRS Simple")
+
+## DDD and CQRS
+
+![CQRS Complex](plantuml/cqrs-complex.png "CQRS Complex")
 
 ## DDD + CQRS terms:
 
