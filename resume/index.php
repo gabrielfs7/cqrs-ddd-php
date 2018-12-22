@@ -10,28 +10,11 @@ use Sample\Query\QueryBus;
 use Sample\Repository\UserRepository;
 use Sample\Service\UserCreator;
 
-spl_autoload_register(
-    function ($className) {
-        $file = str_replace(
-            'Sample' . DIRECTORY_SEPARATOR,
-            '',
-            str_replace(
-                '\\',
-                DIRECTORY_SEPARATOR,
-                $className
-            )
-        ) . '.php';
-
-        if (file_exists($file)) {
-            require_once $file;
-        }
-    }
-);
+require_once 'autoload.php';
 
 $userDomainEventPublisher = new UserDomainEventPublisher();
 $userRepository = new UserRepository();
 $userCreator = new UserCreator($userRepository, $userDomainEventPublisher);
-$queryHandler = new FindUserQueryHandler($userRepository);
 
 $commandHandler = new CreateUserCommandHandler($userCreator);
 $queryHandler = new FindUserQueryHandler($userRepository);
