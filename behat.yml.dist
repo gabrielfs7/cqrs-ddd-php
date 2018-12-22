@@ -1,3 +1,0 @@
-imports:
-  - tests/EntryPoint/api/api.yml
-  - tests/EntryPoint/applications/applications.yml

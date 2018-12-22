@@ -1,41 +1,56 @@
-I am using the code available [here](https://github.com/CodelyTV/cqrs-ddd-php-example) for studding purposes. 
+# CQRS and DDD sample using PHP 
 
-Implementation example of a PHP application following Domain-Driven Design (DDD) and Command Query Responsibility Segregation (CQRS) principles, keeping the code as simple as possible.
+This is a **very straight forward** implementation sample using 
+Domain-Driven Design (DDD) + Command Query Responsibility Segregation (CQRS) principles.
+ 
+The goal is to understand these terminologies, not to use cutting edge frameworks or technologies.
 
-Take a look, play and have fun with this!
+I kept the code as simple as possible. It is totally framework independent and its intent is to 
+explain this approach. 
 
-## 🚀 Environment setup
 
-### Install the needed tools
-* Clone this repository: `git clone https://github.com/CodelyTV/cqrs-ddd-php-example cqrs-ddd-php-example`
-* Move to your project folder: `cd cqrs-ddd-php-example`
-* Start the services: `docker-compose compose up -d` (this make a composer install)
-* Add `api.codelytv.dev` domain to your local hosts: `echo "127.0.0.1 api.codelytv.dev"| sudo tee -a /etc/hosts > /dev/null`
-* Go to [the API healthcheck page](http://api.codelytv.dev:8030/status)
+## DDD + CQRS terms:
 
-### Run the tests!
-Once you have all the dependencies, in order to execute the tests, run this command:
-* `vendor/bin/behat -p api` <sub>This will also create all needed databases.</sub>
-* `vendor/bin/behat -p applications`
-* `vendor/bin/phpunit`
+The main terms used here are technically (and VERY shortly) explained above: 
 
-### Run the environment
-> If you don't want to use the docker integration, you can do the following
-* A [MySQL](https://www.mysql.com/) database
-  - Execute all `.sql` from `/databases` dir
-* [Apache](https://httpd.apache.org/)/[Nginx](https://nginx.org/en/)
-* [Supervisord](http://supervisord.org/)
-  - Execute the `applications/api/bin/console codelytv:domain-events:generate-supervisor-files` command
-  - Link the `applications/api/app/config/supervisor` folder to the supervisor config one
-  - Start supervisord
+- **Aggregate Root:**
+  - Private constructor.
+  - Generally it is an entity, like "User", "Product".
+ 
+- **Entity:**
+  - It has a lifecycle.
+  - Can have its properties changed.
 
-## 🧐 Contributing
-There are some things missing (add swagger, improve documentation...), feel free to add this if you want! If you want 
-some guidelines feel free to contact us :)
+- **Value Object:**
+  - Cannot be changed.
+  - Only methods to retrieve information.
 
-## 🤩 Extra
-This code was show in the [From framework coupled code to #microservices through #DDD](http://codely.tv/screencasts/codigo-acoplado-framework-microservicios-ddd) talk and doubts where answered in [DDD y CQRS: Preguntas Frecuentes](http://codely.tv/screencasts/ddd-cqrs-preguntas-frecuentes/) video.
+- **Domain Event:**
+  - Generally triggered by an AggregateRoot.
+  - They follow a timeline sequence.
+ 
+- **Repository:**
+  - Responsible to store and retrieve Entities from storage layer.
+  - Persistence layer implementation cannot be exposed.
+  
+- **Services:**
+  - Interacts with factories, repositories and entities to perform domain tasks.
+  - Ideally should contain few (or better, just one) methods.
+  - Follow Single Responsibility principle.
+  
+- **Command:**
+  - Perform the write persistence tasks.
+  - Command must not return any value, they are stateless.
 
-🎥 Used in the CodelyTV Pro courses:
-* [🇪🇸 Arquitectura Hexagonal](https://pro.codely.tv/library/arquitectura-hexagonal/66748/about/)
-* [🇪🇸 CQRS: Command Query Responsibility Segregation](https://pro.codely.tv/library/cqrs-command-query-responsibility-segregation-3719e4aa/62554/about/)
+- **Command Handler:**
+  - Receives command and perform actions with its payload. 
+  
+- **Query:**
+  - Perform the read persistence tasks.
+  - After you excute a command, you can use a query to watch its result.
+
+- **Query Handler**
+  - Use repositories, webservices or any other storage layer to query the entities.
+    
+- **Event Publisher:**
+  - Publish all aggregate root events.
