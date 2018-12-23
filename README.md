@@ -8,6 +8,8 @@ The goal is to understand these terminologies, not to use cutting edge framework
 I kept the code as simple as possible. It is totally framework independent and its intent is to 
 explain this approach. 
 
+![CQRS](assets/cqrs.jpg "CQRS")
+
 ## Command & Query separation
 
 Basically as **rule of thumb**: "_A method MUST update the state of the subject OR 
@@ -17,7 +19,7 @@ Accept the subject as an object or entity (i.e. Product, Customer, Stock, etc.).
 if you need to update this object you create a **Command** which does not return the current state
 of the subject. If you wish to know the state of the object, use a **Query** for this. 
 
-![CQRS Simple](plantuml/cqrs.png "CQRS Simple")
+![CQRS Simple](assets/plantuml/cqrs.png "CQRS Simple")
 
 ## DDD and CQRS
 
@@ -28,7 +30,7 @@ of the subject. If you wish to know the state of the object, use a **Query** for
 5. Events are stored and dispatched.
 6. Projections are built to fast query.
 
-![CQRS Complex](plantuml/cqrs-complex.png "CQRS Complex")
+![CQRS Complex](assets/plantuml/cqrs-complex.png "CQRS Complex")
 
 ## DDD + CQRS terms:
 
