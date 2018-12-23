@@ -2,10 +2,10 @@
 
 namespace Sample\Event;
 
-class CreateUserEvent extends AbstractEvent
+class UserCreatedEvent extends AbstractEvent
 {
     public static function name(): string
     {
-        return 'create-user';
+        return 'user-created';
     }
 }

@@ -4,7 +4,7 @@ namespace Sample\Entity;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use Sample\Event\CreateUserEvent;
+use Sample\Event\UserCreatedEvent;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 
@@ -45,7 +45,7 @@ final class User extends AbstractAggregateRoot
     {
         $user = new self($id, $username);
         $user->record(
-            new CreateUserEvent(
+            new UserCreatedEvent(
                 $id->value(),
                 [
                     'id' => $id->value(),

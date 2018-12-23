@@ -58,6 +58,7 @@ The main terms used here are technically (and VERY shortly) explained above:
 - **Domain Event:**
   - Generally triggered by an AggregateRoot.
   - They follow a timeline sequence.
+  - There must be possible to revert (backtrack) the event.
  
 - **Repository:**
   - Responsible to store and retrieve Entities from storage layer.

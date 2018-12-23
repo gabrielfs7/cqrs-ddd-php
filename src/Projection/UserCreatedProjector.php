@@ -2,7 +2,7 @@
 
 namespace Sample\Projection;
 
-use Sample\Event\CreateUserEvent;
+use Sample\Event\UserCreatedEvent;
 use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserId;
 
@@ -20,7 +20,7 @@ class UserCreatedProjector
         $this->userProjectionStorage = $userProjectionStorage;
     }
 
-    public function notify(CreateUserEvent $event): void
+    public function notify(UserCreatedEvent $event): void
     {
         $userId = new UserId($event->aggregateRootId());
 
