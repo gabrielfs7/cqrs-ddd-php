@@ -8,6 +8,13 @@ The goal is to understand these terminologies, not to use cutting edge framework
 I kept the code as simple as possible. It is totally framework independent and its intent is to 
 explain this approach. 
 
+### Eventual consistency
+
+Important thing about CQRS is that we deal with eventual consistency every time.
+
+So probably your **view DB** will have consistent data, but it might not and your 
+application must handle it. 
+
 ![CQRS](assets/cqrs.jpg "CQRS")
 
 ## Command & Query separation
