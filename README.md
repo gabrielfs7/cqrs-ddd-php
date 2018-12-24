@@ -88,4 +88,4 @@ The main terms used here are technically (and VERY shortly) explained above:
   
 - **Projector**
   - Handles the events and store relevant information to support application query.
-  - They are generally used for fast Query.
+  - They are generally used to increase Query speed, by preparing information before store.

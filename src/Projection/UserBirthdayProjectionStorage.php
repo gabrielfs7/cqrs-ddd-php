@@ -4,7 +4,7 @@ namespace Sample\Projection;
 
 use Sample\ValueObject\UserId;
 
-class UserProjectionStorage
+class UserBirthdayProjectionStorage
 {
     /** @var array */
     private static $localStorage = [];

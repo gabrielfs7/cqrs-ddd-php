@@ -3,20 +3,15 @@
 namespace Sample\Projection;
 
 use Sample\Event\UserCreatedEvent;
-use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserId;
 
-class UserCreatedProjector
+class UserBirthdayProjector
 {
-    /** @var UserRepository */
-    private $userRepository;
-
-    /** @var UserProjectionStorage */
+    /** @var UserBirthdayProjectionStorage */
     private $userProjectionStorage;
 
-    public function __construct(UserRepository $userRepository, UserProjectionStorage $userProjectionStorage)
+    public function __construct(UserBirthdayProjectionStorage $userProjectionStorage)
     {
-        $this->userRepository = $userRepository;
         $this->userProjectionStorage = $userProjectionStorage;
     }
 
@@ -24,12 +19,11 @@ class UserCreatedProjector
     {
         $userId = new UserId($event->aggregateRootId());
 
-        $user = $this->userRepository->find($userId);
-
         $this->userProjectionStorage->store(
             $userId,
             [
-                'createdAt' => $user->createAt()
+                'username' => $event->data()['username'],
+                'birthday' => $event->data()['birthday']
             ]
         );
     }

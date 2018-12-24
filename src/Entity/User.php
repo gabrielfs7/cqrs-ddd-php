@@ -17,18 +17,24 @@ final class User extends AbstractAggregateRoot
     private $username;
 
     /** @var DateTimeInterface */
+    private $birthday;
+
+    /** @var DateTimeInterface */
     private $createdAt;
 
-    private function __construct(UserId $id, Username $username)
+    private function __construct()
     {
-        $this->id = $id;
-        $this->username = $username;
         $this->createdAt = new DateTimeImmutable();
     }
 
     public function id(): UserId
     {
         return $this->id;
+    }
+
+    public function birthday(): DateTimeInterface
+    {
+        return $this->birthday;
     }
 
     public function username(): Username
@@ -41,15 +47,19 @@ final class User extends AbstractAggregateRoot
         return $this->createdAt;
     }
 
-    public static function create(UserId $id, Username $username): User
+    public static function create(UserId $id, Username $username, DateTimeInterface $birthday): User
     {
         $user = new self($id, $username);
+        $user->id = $id;
+        $user->username = $username;
+        $user->birthday = $birthday;
         $user->record(
             new UserCreatedEvent(
                 $id->value(),
                 [
                     'id' => $id->value(),
                     'username' => $username->value(),
+                    'birthday' => $birthday->format(DATE_ATOM),
                 ]
             )
         );
