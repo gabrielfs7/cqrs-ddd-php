@@ -5,8 +5,11 @@ namespace Sample\Service;
 use Sample\Entity\User;
 use Sample\Event\UserEventPublisher;
 use Sample\Repository\UserRepository;
+use Sample\ValueObject\UserBirthday;
+use Sample\ValueObject\UserFullName;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
+use Sample\ValueObject\UserPassword;
 
 class UserCreator
 {
@@ -24,9 +27,14 @@ class UserCreator
         $this->userDomainEventPublisher = $userDomainEventPublisher;
     }
 
-    public function create(UserId $id, Username $username): void
-    {
-        $user = User::create($id, $username);
+    public function create(
+        UserId $id,
+        UserFullName $fullName,
+        UserBirthday $birthday,
+        Username $username,
+        UserPassword $password
+    ): void {
+        $user = User::create($id, $fullName, $birthday, $username, $password);
 
         $this->userRepository->save($user);
 

@@ -2,26 +2,26 @@
 
 namespace Sample\Command;
 
-use Sample\Service\UserCreator;
+use Sample\Service\OrderCreator;
 use Sample\ValueObject\UserBirthday;
 use Sample\ValueObject\UserFullName;
 use Sample\ValueObject\UserId;
 use Sample\ValueObject\Username;
 use Sample\ValueObject\UserPassword;
 
-final class CreateUserCommandHandler implements CommandHandlerInterface
+final class CreateOrderCommandHandler implements CommandHandlerInterface
 {
-    /** @var UserCreator */
-    private $userCreator;
+    /** @var OrderCreator */
+    private $orderCreator;
 
-    public function __construct(UserCreator $userCreator)
+    public function __construct(OrderCreator $orderCreator)
     {
-        $this->userCreator = $userCreator;
+        $this->orderCreator = $orderCreator;
     }
 
     public function __invoke(CommandInterface $command): void
     {
-        $this->userCreator->create(
+        $this->orderCreator->create(
             new UserId($command->userId()),
             new UserFullName($command->fullName()),
             new UserBirthday($command->birthday()),

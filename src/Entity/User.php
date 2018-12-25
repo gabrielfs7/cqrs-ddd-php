@@ -68,26 +68,26 @@ final class User extends AbstractAggregateRoot
 
     public static function create(
         UserId $id,
-        Username $username,
         UserFullName $fullName,
-        UserPassword $password,
-        UserBirthday $birthday
+        UserBirthday $birthday,
+        Username $username,
+        UserPassword $password
     ): User {
-        $user = new self($id, $username);
+        $user = new self();
         $user->id = $id;
         $user->fullName = $fullName;
+        $user->birthday = $birthday;
         $user->username = $username;
         $user->password = $password;
-        $user->birthday = $birthday;
         $user->record(
             new UserCreatedEvent(
                 $id->value(),
                 [
                     'id' => $id->value(),
                     'fullName' => $fullName->value(),
+                    'birthday' => $birthday->__toString(),
                     'username' => $username->value(),
                     'password' => $password->value(),
-                    'birthday' => $birthday->__toString(),
                 ]
             )
         );
