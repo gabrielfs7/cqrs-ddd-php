@@ -2,6 +2,8 @@
 
 namespace Sample\Command;
 
+use DateTimeInterface;
+
 final class CreateUserCommand implements CommandInterface
 {
     /** @var string */
@@ -13,11 +15,29 @@ final class CreateUserCommand implements CommandInterface
     /** @var string */
     private $username;
 
-    public function __construct(string $id, string $userId, string $username)
-    {
+    /** @var DateTimeInterface */
+    private $birthday;
+
+    /** @var string */
+    private $fullName;
+
+    /** @var string */
+    private $password;
+
+    public function __construct(
+        string $id,
+        string $userId,
+        string $fullName,
+        string $username,
+        string $password,
+        DateTimeInterface $birthday
+    ) {
         $this->id = $id;
         $this->userId = $userId;
         $this->username = $username;
+        $this->birthday = $birthday;
+        $this->fullName = $fullName;
+        $this->password = $password;
     }
 
     public function id(): string
@@ -33,5 +53,20 @@ final class CreateUserCommand implements CommandInterface
     public function username(): string
     {
         return $this->username;
+    }
+
+    public function birthday(): DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function fullName(): string
+    {
+        return $this->fullName;
+    }
+
+    public function password(): string
+    {
+        return $this->password;
     }
 }
