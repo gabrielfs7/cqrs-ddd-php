@@ -9,9 +9,11 @@ final class QueryBus implements QueryBusInterface
     /** @var QueryHandlerInterface[] */
     private $queryHandlers = [];
 
-    public function registerHandler(QueryHandlerInterface $queryHandler): void
+    public function __construct(FindUserQueryHandler $findUserQueryHandler)
     {
-        $this->queryHandlers[] = $queryHandler;
+        $this->queryHandlers = [
+            $findUserQueryHandler
+        ];
     }
 
     public function ask(QueryInterface $query): QueryResponseInterface

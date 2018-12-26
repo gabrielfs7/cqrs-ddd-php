@@ -15,7 +15,7 @@ use Sample\Repository\UserRepository;
 use Sample\Service\OrderCreator;
 use Sample\Service\UserCreator;
 
-require_once 'autoload.php';
+require_once 'vendor/autoload.php';
 
 $domainEventBus = new EventBus();
 

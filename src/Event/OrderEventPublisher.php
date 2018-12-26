@@ -7,7 +7,7 @@ class OrderEventPublisher implements EventPublisherInterface
     /** @var EventBusInterface */
     private $eventBus;
 
-    public function __construct(EventBusInterface $eventBus)
+    public function __construct(EventBus $eventBus)
     {
         $this->eventBus = $eventBus;
     }
