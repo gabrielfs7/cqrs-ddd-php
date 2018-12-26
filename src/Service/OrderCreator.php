@@ -3,7 +3,7 @@
 namespace Sample\Service;
 
 use Sample\Entity\Order;
-use Sample\Event\OrderEventPublisher;
+use Sample\Event\Publisher\OrderEventPublisher;
 use Sample\Repository\OrderRepository;
 use Sample\ValueObject\OrderAmount;
 use Sample\ValueObject\OrderId;

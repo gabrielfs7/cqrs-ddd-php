@@ -3,7 +3,7 @@
 namespace Sample\Service;
 
 use Sample\Entity\User;
-use Sample\Event\UserEventPublisher;
+use Sample\Event\Publisher\UserEventPublisher;
 use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserBirthday;
 use Sample\ValueObject\UserFullName;

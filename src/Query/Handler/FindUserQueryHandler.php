@@ -1,7 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Sample\Query;
+namespace Sample\Query\Handler;
 
+use Sample\Query\FindUserQuery;
+use Sample\Query\QueryInterface;
+use Sample\Query\QueryResponseInterface;
+use Sample\Query\UserQueryResponse;
 use Sample\Repository\UserRepository;
 use Sample\ValueObject\UserId;
 

@@ -1,6 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Sample\Query;
+namespace Sample\Query\Bus;
+
+use Sample\Query\QueryInterface;
+use sample\query\queryresponseinterface;
 
 interface QueryBusInterface
 {

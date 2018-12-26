@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace sample\query;
+namespace Sample\Query;
 
-interface queryresponseinterface
+interface QueryResponseInterface
 {
 }

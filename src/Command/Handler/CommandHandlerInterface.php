@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Sample\Command;
+namespace Sample\Command\Handler;
+
+use Sample\Command\CommandInterface;
 
 interface CommandHandlerInterface
 {

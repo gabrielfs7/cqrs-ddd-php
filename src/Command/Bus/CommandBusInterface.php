@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Sample\Command;
+namespace Sample\Command\Bus;
+
+use Sample\Command\CommandInterface;
 
 interface CommandBusInterface
 {

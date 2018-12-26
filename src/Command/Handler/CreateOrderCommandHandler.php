@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Sample\Command;
+namespace Sample\Command\Handler;
 
+use Sample\Command\CommandInterface;
+use Sample\Command\CreateOrderCommand;
 use Sample\Service\OrderCreator;
 use Sample\ValueObject\OrderAmount;
 use Sample\ValueObject\OrderId;

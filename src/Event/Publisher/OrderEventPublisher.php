@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Sample\Event;
+namespace Sample\Event\Publisher;
+
+use Sample\Event\Bus\EventBus;
+use Sample\Event\Bus\EventBusInterface;
+use Sample\Event\EventInterface;
 
 class OrderEventPublisher implements EventPublisherInterface
 {

@@ -1,6 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Sample\Command;
+namespace Sample\Command\Bus;
+
+use Sample\Command\CommandInterface;
+use Sample\Command\Handler\CommandHandlerInterface;
+use Sample\Command\Handler\CreateOrderCommandHandler;
+use Sample\Command\Handler\CreateUserCommandHandler;
 
 final class CommandBus implements CommandBusInterface
 {

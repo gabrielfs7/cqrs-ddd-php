@@ -1,8 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Sample\Query;
+namespace Sample\Query\Bus;
 
 use LogicException;
+use Sample\Query\Handler\FindUserQueryHandler;
+use Sample\Query\Handler\QueryHandlerInterface;
+use Sample\Query\QueryInterface;
+use Sample\Query\QueryResponseInterface;
 
 final class QueryBus implements QueryBusInterface
 {

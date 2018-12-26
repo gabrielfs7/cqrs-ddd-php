@@ -1,6 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Sample\Query;
+namespace Sample\Query\Handler;
+
+use Sample\Query\QueryInterface;
+use Sample\Query\QueryResponseInterface;
 
 interface QueryHandlerInterface
 {
