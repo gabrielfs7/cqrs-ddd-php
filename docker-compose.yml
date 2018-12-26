@@ -1,0 +1,43 @@
+version: '3.6'
+
+services:
+  cqrs_ddd_php_app:
+    container_name: cqrs_ddd_php_app
+    image: php/php:7.3-apache-stretch
+    ports:
+      - '8001:80'
+    networks:
+      - cqrs_ddd_php_network
+    volumes:
+      - ./:/var/www/html/
+
+  cqrs_ddd_php_postgres:
+    container_name: cqrs_ddd_php_postgres
+    image: postgres/postgres:11.1
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    restart: always
+    volumes:
+      - cqrs_ddd_php_postgres_volume:/var/www/html/
+    networks:
+      - cqrs_ddd_php_network
+
+  cqrs_ddd_php_eventstore:
+    container_name: cqrs_ddd_php_eventstore
+    image: eventstore/eventstore
+    restart: always
+    ports:
+       - '1113:1113'
+       - '2113:2113'
+    networks:
+      - cqrs_ddd_php_network
+
+networks:
+  cqrs_ddd_php_network:
+    name: cqrs_ddd_php_network
+
+volumes:
+  cqrs_ddd_php_postgres_volume:

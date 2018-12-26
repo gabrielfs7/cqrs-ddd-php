@@ -89,3 +89,24 @@ The main terms used here are technically (and VERY shortly) explained above:
 - **Projector**
   - Handles the events and store relevant information to support application query.
   - They are generally used to increase Query speed, by preparing information before store.
+  
+# Installation
+
+Run docker-compose:
+
+```
+docker-compose up -d
+```
+
+Install composer:
+
+```
+docker container exec -it composer install
+```
+
+## Access EventStore
+
+Access the EventStore web interface [here](http://localhost:2113).
+
+- **User**: admin
+- **Pass**: changeit
