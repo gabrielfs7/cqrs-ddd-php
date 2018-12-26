@@ -18,13 +18,13 @@ final class CreateOrderCommand implements CommandInterface
 
     public function __construct(
         string $id,
-        string $userId,
         string $orderId,
+        string $userId,
         string $amount
     ) {
         $this->id = $id;
-        $this->userId = $userId;
         $this->orderId = $orderId;
+        $this->userId = $userId;
         $this->amount = $amount;
     }
 
@@ -33,14 +33,14 @@ final class CreateOrderCommand implements CommandInterface
         return $this->id;
     }
 
-    public function userId(): string
-    {
-        return $this->userId;
-    }
-
     public function orderId(): string
     {
         return $this->orderId;
+    }
+
+    public function userId(): string
+    {
+        return $this->userId;
     }
 
     public function amount(): float
