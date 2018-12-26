@@ -1,57 +1,14 @@
 <?php declare(strict_types=1);
 
+use DI\ContainerBuilder;
 use Sample\Command\CommandBus;
-use Sample\Command\CreateOrderCommandHandler;
 use Sample\Command\CreateUserCommand;
-use Sample\Command\CreateUserCommandHandler;
-use Sample\Event\EventBus;
-use Sample\Event\OrderEventPublisher;
-use Sample\Event\UserEventPublisher;
 use Sample\Query\FindUserQuery;
-use Sample\Query\FindUserQueryHandler;
 use Sample\Query\QueryBus;
-use Sample\Repository\OrderRepository;
-use Sample\Repository\UserRepository;
-use Sample\Service\OrderCreator;
-use Sample\Service\UserCreator;
 
 require_once 'vendor/autoload.php';
 
-$domainEventBus = new EventBus();
-
-#
-# Register Event Publishers
-#
-$userDomainEventPublisher = new UserEventPublisher($domainEventBus);
-$orderDomainEventPublisher = new OrderEventPublisher($domainEventBus);
-
-#
-# Register Repositories
-#
-$userRepository = new UserRepository();
-$orderRepository = new OrderRepository();
-
-#
-# Register Entity Creators
-#
-$userCreator = new UserCreator($userRepository, $userDomainEventPublisher);
-$orderCreator = new OrderCreator($orderRepository, $orderDomainEventPublisher);
-
-#
-# Register Command Handlers
-#
-$createUserCommandHandler = new CreateUserCommandHandler($userCreator);
-$createOrderCommandHandler = new CreateOrderCommandHandler($orderCreator);
-
-#
-# Register queries
-#
-$queryHandler = new FindUserQueryHandler($userRepository);
-
-$commandBus = new CommandBus($createUserCommandHandler, $createOrderCommandHandler);
-
-$queryBus = new QueryBus();
-$queryBus->registerHandler($queryHandler);
+$container = ContainerBuilder::buildDevContainer();
 
 #
 # Register the commands to create users
@@ -64,6 +21,7 @@ $command4 = new CreateUserCommand(uniqid(), '4', 'Julie West', 'julie.west', 'se
 #
 # Handle commands
 #
+$commandBus = $container->get(CommandBus::class);
 $commandBus->dispatch($command1);
 $commandBus->dispatch($command2);
 $commandBus->dispatch($command3);
@@ -76,6 +34,8 @@ $userQuery1 = new FindUserQuery('1');
 $userQuery2 = new FindUserQuery('2');
 $userQuery3 = new FindUserQuery('3');
 $userQuery4 = new FindUserQuery('4');
+
+$queryBus = $container->get(QueryBus::class);
 
 #
 # Handle query

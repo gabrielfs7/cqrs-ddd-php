@@ -2,19 +2,19 @@
 
 namespace Sample\ValueObject;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 class UserBirthday
 {
-    /** @var DateTimeImmutable */
+    /** @var DateTimeInterface */
     private $birthday;
 
-    public function __construct(string $birthday)
+    public function __construct(DateTimeInterface $birthday)
     {
-        $this->birthday = new DateTimeImmutable($birthday);
+        $this->birthday = $birthday;
     }
 
-    public function value(): DateTimeImmutable
+    public function value(): DateTimeInterface
     {
         return $this->birthday;
     }

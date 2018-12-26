@@ -28,6 +28,6 @@ final class CreateOrderCommandHandler implements CommandHandlerInterface
 
     public function canHandle(CommandInterface $command): bool
     {
-        return $command instanceof CreateUserCommand;
+        return $command instanceof CreateOrderCommand;
     }
 }

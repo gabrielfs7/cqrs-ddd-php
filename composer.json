@@ -3,5 +3,10 @@
   "require": {
     "php": ">=7.2.10",
     "php-di/php-di": "6.0.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sample\\" : "src/"
+    }
   }
 }
