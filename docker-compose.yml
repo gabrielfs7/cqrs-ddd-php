@@ -3,7 +3,7 @@ version: '3.6'
 services:
   cqrs_ddd_php_app:
     container_name: cqrs_ddd_php_app
-    image: php/php:7.3-apache-stretch
+    image: php:7.3-apache-stretch
     ports:
       - '8001:80'
     networks:
@@ -13,7 +13,7 @@ services:
 
   cqrs_ddd_php_postgres:
     container_name: cqrs_ddd_php_postgres
-    image: postgres/postgres:11.1
+    image: postgres:11.1
     ports:
       - '5432:5432'
     environment:
