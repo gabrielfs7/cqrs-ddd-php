@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
 use DI\ContainerBuilder;
-use Sample\Command\Bus\CommandBus;
-use Sample\Command\CreateUserCommand;
-use Sample\Query\Bus\QueryBus;
-use Sample\Query\FindUserQuery;
+use Sample\Domain\Command\Bus\CommandBus;
+use Sample\Domain\Command\CreateUserCommand;
+use Sample\Domain\Query\Bus\QueryBus;
+use Sample\Domain\Query\FindUserQuery;
 
 require_once 'vendor/autoload.php';
 
