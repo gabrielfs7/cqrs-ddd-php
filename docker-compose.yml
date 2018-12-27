@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   cqrs_ddd_php_app:
@@ -21,7 +21,7 @@ services:
       POSTGRES_PASSWORD: root
     restart: always
     volumes:
-      - cqrs_ddd_php_postgres_volume:/var/www/html/
+      - cqrs_ddd_php_postgres_volume:/var/lib/postgresql
     networks:
       - cqrs_ddd_php_network
 
