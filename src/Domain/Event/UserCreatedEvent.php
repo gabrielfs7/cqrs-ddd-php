@@ -4,7 +4,7 @@ namespace Sample\Domain\Event;
 
 class UserCreatedEvent extends AbstractEvent
 {
-    public static function name(): string
+    public function name(): string
     {
         return 'user-created';
     }

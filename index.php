@@ -40,12 +40,7 @@ $queryBus = $container->get(QueryBus::class);
 #
 # Handle query
 #
-echo PHP_EOL;
-var_export($queryBus->ask($userQuery1));
-echo PHP_EOL;
-var_export($queryBus->ask($userQuery2));
-echo PHP_EOL;
-var_export($queryBus->ask($userQuery3));
-echo PHP_EOL;
-var_export($queryBus->ask($userQuery4));
-echo PHP_EOL;
+$queryBus->ask($userQuery1);
+$queryBus->ask($userQuery2);
+$queryBus->ask($userQuery3);
+$queryBus->ask($userQuery4);

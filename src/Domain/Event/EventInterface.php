@@ -6,7 +6,7 @@ use DateTimeInterface;
 
 interface EventInterface
 {
-    public static function name(): string;
+    public function name(): string;
 
     public function eventId(): string;
 

@@ -3,23 +3,24 @@
 namespace Sample\Domain\Entity;
 
 use Sample\Domain\Event\AbstractEvent;
+use Sample\Domain\Event\EventInterface;
 
 class AbstractAggregateRoot implements AggregateRootInterface
 {
-    /** @var array */
-    private $domainEvents;
+    /** @var EventInterface[] */
+    private $events;
 
     final public function pullDomainEvents(): array
     {
-        $domainEvents = $this->domainEvents;
+        $domainEvents = $this->events;
 
-        $this->domainEvents = [];
+        $this->events = [];
 
         return $domainEvents;
     }
 
     final protected function record(AbstractEvent $domainEvent): void
     {
-        $this->domainEvents[] = $domainEvent;
+        $this->events[] = $domainEvent;
     }
 }

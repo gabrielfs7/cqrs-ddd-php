@@ -27,7 +27,7 @@ abstract class AbstractEvent implements EventInterface
     ) {
         $this->data = $data;
         $this->aggregateRootId = $aggregateRootId;
-        $this->eventId = $eventId ?? static::name()  . '_' . uniqid();
+        $this->eventId = $eventId ?? $this->generateId();
         $this->occurredAt = $occurredAt ?: new DateTimeImmutable();
     }
 
@@ -49,5 +49,14 @@ abstract class AbstractEvent implements EventInterface
     public function occurredAt(): DateTimeInterface
     {
         return $this->occurredAt;
+    }
+
+    private function generateId()
+    {
+        return 'a' . rand(1000000, 9999999) . '-' .
+            'b' . rand(100, 999) . '-' .
+            'c' . rand(100, 999) . '-' .
+            'd' . rand(100, 999) . '-' .
+            'e' . rand(10000000000, 99999999999);
     }
 }

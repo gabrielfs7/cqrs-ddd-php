@@ -1,8 +1,9 @@
 {
   "name": "gabrielfs7/cqrs-dd-php",
   "require": {
-    "php": ">=7.3",
-    "php-di/php-di": "6.0.5"
+    "php": ">=7.2.10",
+    "php-di/php-di": "6.0.5",
+    "guzzlehttp/guzzle": "~6.0"
   },
   "autoload": {
     "psr-4": {

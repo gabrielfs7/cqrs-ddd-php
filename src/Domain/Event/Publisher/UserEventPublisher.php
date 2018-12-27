@@ -2,9 +2,9 @@
 
 namespace Sample\Domain\Event\Publisher;
 
-use Sample\Domain\Event\Bus\EventBus;
 use Sample\Domain\Event\Bus\EventBusInterface;
 use Sample\Domain\Event\EventInterface;
+use Sample\Infrastructure\Event\Bus\EventBus;
 
 class UserEventPublisher implements EventPublisherInterface
 {
