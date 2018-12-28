@@ -3,7 +3,11 @@ version: '3.7'
 services:
   cqrs_ddd_php_app:
     container_name: cqrs_ddd_php_app
-    image: php:7.3-apache-stretch
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: cqrs_ddd_php_app
+    restart: always
     ports:
       - '8001:80'
     networks:

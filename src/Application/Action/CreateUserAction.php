@@ -3,6 +3,7 @@
 namespace Sample\Application\Action;
 
 use DateTimeImmutable;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
 use Sample\Domain\Command\CreateUserCommand;
@@ -12,9 +13,9 @@ class CreateUserAction
     /** @var CommandBus */
     private $commandBus;
 
-    public function __construct(CommandBus $commandBus)
+    public function __construct(ContainerInterface $container)
     {
-        $this->commandBus = $commandBus;
+        $this->commandBus = $container->get(CommandBus::class);
     }
 
     public function __invoke(ResponseInterface $response)
