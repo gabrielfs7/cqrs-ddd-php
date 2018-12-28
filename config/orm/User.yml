@@ -1,0 +1,30 @@
+Sample\Domain\Entity\User:
+  type: entity
+  repositoryClass: Sample\Domain\Repository\UserRepository
+  table: User
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    fullName:
+      type: string
+      column: full_name
+      nullable: false
+    birthday:
+      type: string
+      column: birthday
+      nullable: false
+    username:
+      type: string
+      column: username
+      nullable: false
+    password:
+      type: string
+      column: password
+      nullable: false
+    createdAt:
+      type: datetime
+      column: created_at
+      nullable: false

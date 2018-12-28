@@ -3,6 +3,7 @@
 namespace Sample\Domain\Query\Bus;
 
 use LogicException;
+use Sample\Domain\Query\UserBirthdaysQuery;
 use Sample\Domain\Query\Handler\FindUserQueryHandler;
 use Sample\Domain\Query\Handler\QueryHandlerInterface;
 use Sample\Domain\Query\QueryInterface;
@@ -13,10 +14,10 @@ final class QueryBus implements QueryBusInterface
     /** @var QueryHandlerInterface[] */
     private $queryHandlers = [];
 
-    public function __construct(FindUserQueryHandler $findUserQueryHandler)
+    public function __construct(UserBirthdaysQuery $userBirthdaysQuery)
     {
         $this->queryHandlers = [
-            $findUserQueryHandler
+            $userBirthdaysQuery
         ];
     }
 

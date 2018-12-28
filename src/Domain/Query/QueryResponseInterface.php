@@ -4,4 +4,5 @@ namespace Sample\Domain\Query;
 
 interface QueryResponseInterface
 {
+    public function body(): array;
 }

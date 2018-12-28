@@ -9,14 +9,28 @@ use Sample\Domain\Event\EventInterface;
 
 class EventBus implements EventBusInterface
 {
-    private const EVENT_STORE_URL = 'http://localhost:2113';
-
     /** @var Client */
     private $client;
 
-    public function __construct(Client $client)
-    {
+    /** @var string */
+    private $host;
+
+    /** @var string */
+    private $port;
+
+    /** @var string */
+    private $stream;
+
+    public function __construct(
+        string $host,
+        string $port,
+        string $stream,
+        Client $client
+    ) {
         $this->client = $client;
+        $this->host = $host;
+        $this->port = $port;
+        $this->stream = $stream;
     }
 
     public function notify(EventInterface $event): void
@@ -24,7 +38,7 @@ class EventBus implements EventBusInterface
         $this->client->send(
             new Request(
                 'POST',
-                self::EVENT_STORE_URL . DIRECTORY_SEPARATOR . 'streams/cqrs_ddd_php',
+                $this->host  . ':'. $this->port . '/streams/' . $this->stream,
                 [
                     'Content-type' => 'application/json',
                     'ES-EventType' => $event->name(),

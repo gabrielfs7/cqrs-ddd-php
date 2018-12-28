@@ -51,7 +51,7 @@ abstract class AbstractEvent implements EventInterface
         return $this->occurredAt;
     }
 
-    private function generateId()
+    private function generateId(): string
     {
         return 'a' . rand(1000000, 9999999) . '-' .
             'b' . rand(100, 999) . '-' .
