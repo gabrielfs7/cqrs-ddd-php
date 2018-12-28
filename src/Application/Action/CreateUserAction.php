@@ -7,8 +7,9 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
 use Sample\Domain\Command\CreateUserCommand;
+use Slim\Http\StatusCode;
 
-class CreateUserAction
+class CreateUserAction extends AbstractAction
 {
     /** @var CommandBus */
     private $commandBus;
@@ -18,7 +19,7 @@ class CreateUserAction
         $this->commandBus = $container->get(CommandBus::class);
     }
 
-    public function __invoke(ResponseInterface $response)
+    public function __invoke(ResponseInterface $response): ResponseInterface
     {
         $this->commandBus->dispatch(
             new CreateUserCommand(
@@ -31,6 +32,6 @@ class CreateUserAction
             )
         );
 
-        return $response->withStatus(202);
+        return $this->jsonResponse($response, StatusCode::HTTP_ACCEPTED);
     }
 }

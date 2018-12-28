@@ -5,6 +5,9 @@ return [
         'displayErrorDetails' => true,
         'addContentLengthHeader' => false,
         'determineRouteBeforeAppMiddleware' => false,
+        'responseChunkSize' => 4096,
+        'outputBuffering' => 'append',
+        'httpVersion' => '2.0',
         'eventstore' => [
             'host' => 'http://cqrs_ddd_php_eventstore',
             'port' => '2113',

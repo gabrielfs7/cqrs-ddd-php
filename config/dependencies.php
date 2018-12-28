@@ -29,4 +29,8 @@ return [
             $container->get(Client::class)
         );
     },
+
+    DateTimeInterface::class => function (): DateTimeInterface {
+        return new DateTimeImmutable();
+    }
 ];

@@ -1,10 +1,11 @@
 <?php
 
+use DI\Bridge\Slim\App;
 use DI\ContainerBuilder;
 
 require 'vendor/autoload.php';
 
-$app = new class() extends \DI\Bridge\Slim\App {
+$app = new class() extends App {
     protected function configureContainer(ContainerBuilder $builder)
     {
         $builder->addDefinitions(__DIR__ . '/config/settings.php');
