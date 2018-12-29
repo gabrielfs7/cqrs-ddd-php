@@ -101,7 +101,15 @@ docker-compose up -d
 Install composer:
 
 ```
-docker container exec -it composer install
+docker container exec -it cqrs_ddd_php_app composer install
+```
+
+Create database schema:
+
+_Before executing the command above you must create a database `cqrs_ddd_php` in your Postgres server Docker container_.
+
+```
+docker container exec -it cqrs_ddd_php_app bin/doctrine orm:schema-tool:create
 ```
 
 ## Access EventStore

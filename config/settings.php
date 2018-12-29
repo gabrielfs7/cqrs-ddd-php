@@ -16,13 +16,13 @@ return [
         'doctrine' => [
             'dev_mode' => true,
             'prefixes' => [
-                __DIR__ . '/../orm' => 'Sample\Domain\Entity',
+                __DIR__ . '/orm' => 'Sample\Domain\Entity',
             ],
             'connection' => [
-                'driver' => 'pdo_postgres',
+                'driver' => 'pdo_pgsql',
                 'host' => 'cqrs_ddd_php_postgres',
                 'port' => 5432,
-                'dbname' => 'cqrs_ddd_php_postgres',
+                'dbname' => 'cqrs_ddd_php',
                 'user' => 'root',
                 'password' => 'root',
                 'charset' => 'utf8',

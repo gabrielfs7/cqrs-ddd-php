@@ -12,7 +12,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Sample\\" : "src/"
+      "Sample\\": "src/"
     }
+  },
+  "config": {
+    "bin-dir": "bin"
   }
 }

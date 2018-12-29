@@ -11,7 +11,7 @@ return [
     EntityManager::class => function (ContainerInterface $container): EntityManager {
         $settings = $container->get('settings')['doctrine'];
 
-        $driver = new SimplifiedYamlDriver($settings['prefixes']);
+        $driver = new SimplifiedYamlDriver($settings['prefixes'], '.yml');
 
         $config = Setup::createConfiguration($settings['dev_mode']);
         $config->setMetadataDriverImpl($driver);
