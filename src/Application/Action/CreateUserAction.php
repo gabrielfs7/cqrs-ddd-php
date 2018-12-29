@@ -2,7 +2,7 @@
 
 namespace Sample\Application\Action;
 
-use DateTimeImmutable;
+use DateTime;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
@@ -23,12 +23,11 @@ class CreateUserAction extends AbstractAction
     {
         $this->commandBus->dispatch(
             new CreateUserCommand(
-                uniqid(),
                 '4',
                 'Julie West',
                 'julie.west',
                 'secret',
-                new DateTimeImmutable('1999-05-06')
+                new DateTime('1999-05-06')
             )
         );
 

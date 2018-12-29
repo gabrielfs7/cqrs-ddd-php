@@ -17,7 +17,7 @@ class UserBirthdayProjector
 
     public function notify(UserCreatedEvent $event): void
     {
-        $userId = new UserId($event->aggregateRootId());
+        $userId = new UserId((int)$event->aggregateRootId());
 
         $this->userProjectionStorage->store(
             $userId,

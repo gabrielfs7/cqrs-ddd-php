@@ -1,19 +1,19 @@
 Sample\Domain\Entity\User:
   type: entity
   repositoryClass: Sample\Domain\Repository\UserRepository
-  table: User
+  table: User_
   id:
     id:
-      type: integer
+      type: string
       generator:
-        strategy: AUTO
+        strategy: NONE
   fields:
     fullName:
       type: string
       column: full_name
       nullable: false
     birthday:
-      type: string
+      type: datetime
       column: birthday
       nullable: false
     username:

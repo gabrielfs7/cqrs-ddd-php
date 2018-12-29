@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use GuzzleHttp\Client;
@@ -17,6 +18,10 @@ return [
         $config->setMetadataDriverImpl($driver);
 
         return EntityManager::create($settings['connection'], $config);
+    },
+
+    EntityManagerInterface::class => function (ContainerInterface $container): EntityManagerInterface {
+        return $container->get(EntityManager::class);
     },
 
     EventBus::class => function (ContainerInterface $container): EventBus {

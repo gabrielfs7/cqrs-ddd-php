@@ -7,5 +7,5 @@ use Sample\Application\Action\ListUserBirthdayAction;
 /** @var ContainerInterface $container */
 $container = $app->getContainer();
 
-$app->get('/api/users/birthdays', ListUserBirthdayAction::class);
-$app->post('[/]', CreateUserAction::class);
+$app->get('/api/users/birthdays[/]', ListUserBirthdayAction::class);
+$app->post('/api/users[/]', CreateUserAction::class);

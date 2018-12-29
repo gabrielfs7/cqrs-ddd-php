@@ -2,23 +2,6 @@
 
 namespace Sample\Domain\Repository;
 
-use Sample\Domain\Entity\Order;
-use Sample\Domain\ValueObject\OrderId;
-
-class OrderRepository
+class OrderRepository extends AbstractRepository
 {
-    /** @var Order[] */
-    private static $localStorage = [];
-
-    public function save(Order $order): Order
-    {
-        self::$localStorage[$order->id()->value()] = $order;
-
-        return $order;
-    }
-
-    public function find(OrderId $orderId): ?Order
-    {
-        return self::$localStorage[$orderId->value()] ?? null;
-    }
 }

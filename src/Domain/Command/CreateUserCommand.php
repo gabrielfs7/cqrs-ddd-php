@@ -9,7 +9,7 @@ final class CreateUserCommand implements CommandInterface
     /** @var string */
     private $id;
 
-    /** @var string */
+    /** @var int */
     private $userId;
 
     /** @var string */
@@ -25,14 +25,12 @@ final class CreateUserCommand implements CommandInterface
     private $password;
 
     public function __construct(
-        string $id,
-        string $userId,
+        int $userId,
         string $fullName,
         string $username,
         string $password,
         DateTimeInterface $birthday
     ) {
-        $this->id = $id;
         $this->userId = $userId;
         $this->username = $username;
         $this->birthday = $birthday;
@@ -45,7 +43,7 @@ final class CreateUserCommand implements CommandInterface
         return $this->id;
     }
 
-    public function userId(): string
+    public function userId(): int
     {
         return $this->userId;
     }

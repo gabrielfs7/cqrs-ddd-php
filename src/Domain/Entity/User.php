@@ -2,7 +2,7 @@
 
 namespace Sample\Domain\Entity;
 
-use DateTimeImmutable;
+use DateTime;
 use DateTimeInterface;
 use Sample\Domain\Event\UserCreatedEvent;
 use Sample\Domain\ValueObject\UserBirthday;
@@ -13,19 +13,19 @@ use Sample\Domain\ValueObject\UserPassword;
 
 final class User extends AbstractAggregateRoot
 {
-    /** @var UserId */
+    /** @var int */
     private $id;
 
-    /** @var UserFullName */
+    /** @var string */
     private $fullName;
 
-    /** @var UserBirthday */
+    /** @var DateTimeInterface */
     private $birthday;
 
-    /** @var Username */
+    /** @var string */
     private $username;
 
-    /** @var UserPassword */
+    /** @var string */
     private $password;
 
     /** @var DateTimeInterface */
@@ -33,30 +33,30 @@ final class User extends AbstractAggregateRoot
 
     private function __construct()
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DateTime();
     }
 
-    public function id(): UserId
+    public function id(): ?int
     {
         return $this->id;
     }
 
-    public function fullName(): UserFullName
+    public function fullName(): string
     {
         return $this->fullName;
     }
 
-    public function birthday(): UserBirthday
+    public function birthday(): DateTimeInterface
     {
         return $this->birthday;
     }
 
-    public function username(): Username
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function password(): UserPassword
+    public function password(): string
     {
         return $this->password;
     }
@@ -67,23 +67,24 @@ final class User extends AbstractAggregateRoot
     }
 
     public static function create(
-        UserId $id,
         UserFullName $fullName,
         UserBirthday $birthday,
         Username $username,
         UserPassword $password
     ): User {
+        $userId = new UserId();
+
         $user = new self();
-        $user->id = $id;
-        $user->fullName = $fullName;
-        $user->birthday = $birthday;
-        $user->username = $username;
-        $user->password = $password;
+        $user->id = $userId->value();
+        $user->fullName = $fullName->value();
+        $user->birthday = $birthday->value();
+        $user->username = $username->value();
+        $user->password = $password->value();
         $user->record(
             new UserCreatedEvent(
-                $id->value(),
+                $userId->value(),
                 [
-                    'id' => $id->value(),
+                    'id' => $userId->value(),
                     'fullName' => $fullName->value(),
                     'birthday' => $birthday->__toString(),
                     'username' => $username->value(),
