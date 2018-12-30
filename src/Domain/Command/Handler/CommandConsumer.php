@@ -5,6 +5,7 @@ namespace Sample\Domain\Command\Handler;
 use Exception;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+use Sample\Domain\Command\Bus\CommandBusInterface;
 use Sample\Domain\Command\CommandInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -33,7 +34,7 @@ final class CommandConsumer
         $channel = $this->streamConnection->channel();
 
         $channel->queue_declare(
-            'hello',
+            CommandBusInterface::QUEUE_NAME,
             false,
             false,
             false,
@@ -60,7 +61,7 @@ final class CommandConsumer
         };
 
         $channel->basic_consume(
-            'hello',
+            CommandBusInterface::QUEUE_NAME,
             '',
             false,
             true,

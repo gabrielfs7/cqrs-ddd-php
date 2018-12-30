@@ -22,7 +22,7 @@ final class CommandBus implements CommandBusInterface
 
         $channel = $this->streamConnection->channel();
         $channel->queue_declare(
-            'hello',
+            CommandBusInterface::QUEUE_NAME,
             false,
             false,
             false,
@@ -31,7 +31,7 @@ final class CommandBus implements CommandBusInterface
 
         $msg = new AMQPMessage(serialize($command));
 
-        $channel->basic_publish($msg, '', 'hello');
+        $channel->basic_publish($msg, '', CommandBusInterface::QUEUE_NAME);
         $channel->close();
 
         $this->streamConnection->close();

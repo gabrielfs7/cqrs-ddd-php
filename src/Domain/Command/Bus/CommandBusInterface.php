@@ -6,5 +6,7 @@ use Sample\Domain\Command\CommandInterface;
 
 interface CommandBusInterface
 {
+    public const QUEUE_NAME = 'commands-queue';
+
     public function dispatch(CommandInterface $command): void;
 }
