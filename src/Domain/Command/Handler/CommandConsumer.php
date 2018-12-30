@@ -2,6 +2,7 @@
 
 namespace Sample\Domain\Command\Handler;
 
+use Exception;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Sample\Domain\Command\CommandInterface;
@@ -40,17 +41,21 @@ final class CommandConsumer
         );
 
         $callback = function (AMQPMessage $msg) use ($output) {
-            /** @var CommandInterface $command */
-            $command = unserialize($msg->body);
+            try {
+                /** @var CommandInterface $command */
+                $command = unserialize($msg->body);
 
-            foreach ($this->commandHandlers as $commandHandler) {
-                if ($commandHandler->canHandle($command)) {
-                    $commandHandler($command);
+                foreach ($this->commandHandlers as $commandHandler) {
+                    if ($commandHandler->canHandle($command)) {
+                        $commandHandler($command);
 
-                    $output->writeln(sprintf(' [√] Received command %s',  $command->id()));
+                        $output->writeln(sprintf(' [√] Received command %s',  $command->id()));
 
-                    return;
+                        return;
+                    }
                 }
+            } catch (Exception $exception) {
+                $output->writeln(sprintf(' [!] Error: %s',  $exception->getMessage()));
             }
         };
 

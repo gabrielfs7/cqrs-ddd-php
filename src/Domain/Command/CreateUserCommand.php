@@ -2,6 +2,7 @@
 
 namespace Sample\Domain\Command;
 
+use DateTime;
 use DateTimeInterface;
 use Sample\Domain\ValueObject\UserId;
 
@@ -29,14 +30,14 @@ final class CreateUserCommand implements CommandInterface
         string $fullName,
         string $username,
         string $password,
-        DateTimeInterface $birthday
+        string $birthday
     ) {
         $userId = (new UserId())->value();
 
         $this->id = sprintf('create-user-%s', $userId);
         $this->userId = $userId;
         $this->username = $username;
-        $this->birthday = $birthday;
+        $this->birthday = new DateTime($birthday);
         $this->fullName = $fullName;
         $this->password = $password;
     }

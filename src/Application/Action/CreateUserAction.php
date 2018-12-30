@@ -2,8 +2,8 @@
 
 namespace Sample\Application\Action;
 
-use DateTime;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
 use Sample\Domain\Command\CreateUserCommand;
@@ -19,17 +19,29 @@ class CreateUserAction extends AbstractAction
         $this->commandBus = $container->get(CommandBus::class);
     }
 
-    public function __invoke(ResponseInterface $response): ResponseInterface
+    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
+        $payload = $this->parseJsonRequest($request);
+
         $this->commandBus->dispatch(
             new CreateUserCommand(
-                'Julie West',
-                'julie.west',
-                'secret',
-                new DateTime('1999-05-06')
+                $payload['fullName'],
+                $payload['username'],
+                $payload['password'],
+                $payload['birthday']
             )
         );
 
         return $this->jsonResponse($response, StatusCode::HTTP_ACCEPTED);
+    }
+
+    protected function getPayloadDefault(): array
+    {
+        return [
+            'fullName' => null,
+            'username' => null,
+            'password' => null,
+            'birthday' => null,
+        ];
     }
 }
