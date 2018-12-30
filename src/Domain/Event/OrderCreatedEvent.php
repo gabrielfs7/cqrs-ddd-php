@@ -6,6 +6,6 @@ class OrderCreatedEvent extends AbstractEvent
 {
     public function name(): string
     {
-        return 'order-created';
+        return 'orderCreated';
     }
 }

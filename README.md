@@ -119,6 +119,13 @@ Access local EventStore web interface [here](http://localhost:2113).
 - **User**: admin
 - **Pass**: changeit
 
+#### Projections options
+
+Here you can find interesting links on how to work with projections:
+
+- https://eventstore.org/docs/getting-started/projections/index.html
+- https://eventstore.org/docs/projections/user-defined-projections/index.html
+
 
 ## Access RabbiMQ
 
