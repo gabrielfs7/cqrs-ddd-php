@@ -2,3 +2,4 @@
 reference
 vendor
 bin
+!bin/command-consumer

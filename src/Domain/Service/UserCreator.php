@@ -7,6 +7,7 @@ use Sample\Domain\Event\Publisher\UserEventPublisher;
 use Sample\Domain\Repository\UserRepository;
 use Sample\Domain\ValueObject\UserBirthday;
 use Sample\Domain\ValueObject\UserFullName;
+use Sample\Domain\ValueObject\UserId;
 use Sample\Domain\ValueObject\Username;
 use Sample\Domain\ValueObject\UserPassword;
 
@@ -27,12 +28,13 @@ class UserCreator
     }
 
     public function create(
+        UserId $userId,
         UserFullName $fullName,
         UserBirthday $birthday,
         Username $username,
         UserPassword $password
     ): void {
-        $user = User::create($fullName, $birthday, $username, $password);
+        $user = User::create($userId, $fullName, $birthday, $username, $password);
 
         $this->userRepository->save($user);
 

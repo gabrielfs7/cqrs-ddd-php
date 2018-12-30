@@ -23,7 +23,6 @@ class CreateUserAction extends AbstractAction
     {
         $this->commandBus->dispatch(
             new CreateUserCommand(
-                '4',
                 'Julie West',
                 'julie.west',
                 'secret',

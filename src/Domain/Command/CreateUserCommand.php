@@ -3,13 +3,14 @@
 namespace Sample\Domain\Command;
 
 use DateTimeInterface;
+use Sample\Domain\ValueObject\UserId;
 
 final class CreateUserCommand implements CommandInterface
 {
     /** @var string */
     private $id;
 
-    /** @var int */
+    /** @var string */
     private $userId;
 
     /** @var string */
@@ -25,12 +26,14 @@ final class CreateUserCommand implements CommandInterface
     private $password;
 
     public function __construct(
-        int $userId,
         string $fullName,
         string $username,
         string $password,
         DateTimeInterface $birthday
     ) {
+        $userId = (new UserId())->value();
+
+        $this->id = sprintf('create-user-%s', $userId);
         $this->userId = $userId;
         $this->username = $username;
         $this->birthday = $birthday;
@@ -43,7 +46,7 @@ final class CreateUserCommand implements CommandInterface
         return $this->id;
     }
 
-    public function userId(): int
+    public function userId(): string
     {
         return $this->userId;
     }

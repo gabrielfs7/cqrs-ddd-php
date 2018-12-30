@@ -24,6 +24,7 @@ final class CreateUserCommandHandler implements CommandHandlerInterface
     public function __invoke(CommandInterface $command): void
     {
         $this->userCreator->create(
+            new UserId($command->userId()),
             new UserFullName($command->fullName()),
             new UserBirthday($command->birthday()),
             new Username($command->username()),

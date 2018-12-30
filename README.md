@@ -123,3 +123,11 @@ Access local EventStore web interface [here](http://localhost:2113).
 ## Access RabbiMQ
 
 Access local RabbitMQ management plugin [here](http://localhost:15672).
+
+### Consuming commands
+
+Execute the command above to start consuming published commands:
+
+```
+docker container exec -it cqrs_ddd_php_app bin/command-consumer
+```

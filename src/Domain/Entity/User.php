@@ -67,13 +67,12 @@ final class User extends AbstractAggregateRoot
     }
 
     public static function create(
+        UserId $userId,
         UserFullName $fullName,
         UserBirthday $birthday,
         Username $username,
         UserPassword $password
     ): User {
-        $userId = new UserId();
-
         $user = new self();
         $user->id = $userId->value();
         $user->fullName = $fullName->value();

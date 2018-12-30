@@ -2,32 +2,38 @@
 
 namespace Sample\Domain\Command\Bus;
 
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 use Sample\Domain\Command\CommandInterface;
-use Sample\Domain\Command\Handler\CommandHandlerInterface;
-use Sample\Domain\Command\Handler\CreateOrderCommandHandler;
-use Sample\Domain\Command\Handler\CreateUserCommandHandler;
 
 final class CommandBus implements CommandBusInterface
 {
-    /** @var CommandHandlerInterface[] */
-    private $commandHandlers;
+    /** @var AMQPStreamConnection */
+    private $streamConnection;
 
-    public function __construct(
-        CreateUserCommandHandler $createUserCommandHandler,
-        CreateOrderCommandHandler $createOrderCommandHandler
-    ) {
-        $this->commandHandlers = [
-            $createUserCommandHandler,
-            $createOrderCommandHandler
-        ];
+    public function __construct(AMQPStreamConnection $streamConnection)
+    {
+        $this->streamConnection = $streamConnection;
     }
 
     public function dispatch(CommandInterface $command): void
     {
-        foreach ($this->commandHandlers as $commandHandler) {
-            if ($commandHandler->canHandle($command)) {
-                $commandHandler($command);
-            }
-        }
+        $this->streamConnection->reconnect();
+
+        $channel = $this->streamConnection->channel();
+        $channel->queue_declare(
+            'hello',
+            false,
+            false,
+            false,
+            false
+        );
+
+        $msg = new AMQPMessage(serialize($command));
+
+        $channel->basic_publish($msg, '', 'hello');
+        $channel->close();
+
+        $this->streamConnection->close();
     }
 }

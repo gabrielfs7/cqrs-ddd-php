@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+use Sample\Domain\Command\Handler\CommandConsumer;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+require_once 'bootstrap.php';
+
+echo PHP_EOL;
+echo PHP_EOL;
+echo 'Wating messages...';
+echo PHP_EOL;
+echo PHP_EOL;
+
+$app->getContainer()
+    ->get(CommandConsumer::class)
+    ->handle(new ConsoleOutput());
