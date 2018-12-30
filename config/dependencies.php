@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use GuzzleHttp\Client;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
 use Sample\Infrastructure\Event\Bus\EventBus;
 
@@ -35,7 +36,18 @@ return [
         );
     },
 
+    AMQPStreamConnection::class => function (ContainerInterface $container): AMQPStreamConnection {
+        $settings = $container->get('settings')['rabbitmq'];
+
+        return new AMQPStreamConnection(
+            $settings['host'],
+            $settings['port'],
+            $settings['user'],
+            $settings['password']
+        );
+    },
+
     DateTimeInterface::class => function (): DateTimeInterface {
         return new DateTimeImmutable();
-    }
+    },
 ];

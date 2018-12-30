@@ -13,6 +13,12 @@ return [
             'port' => '2113',
             'stream' => 'cqrs_ddd_php',
         ],
+        'rabbitmq' => [
+            'host' => 'cqrs_ddd_php_rabbitmq',
+            'port' => 5672,
+            'user' => 'root',
+            'password' => 'root',
+        ],
         'doctrine' => [
             'dev_mode' => true,
             'prefixes' => [
