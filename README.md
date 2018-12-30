@@ -114,7 +114,12 @@ docker container exec -it cqrs_ddd_php_app bin/doctrine orm:schema-tool:create
 
 ## Access EventStore
 
-Access the EventStore web interface [here](http://localhost:2113).
+Access local EventStore web interface [here](http://localhost:2113).
 
 - **User**: admin
 - **Pass**: changeit
+
+
+## Access RabbiMQ
+
+Access local RabbitMQ management plugin [here](http://localhost:15672).

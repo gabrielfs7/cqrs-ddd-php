@@ -39,6 +39,19 @@ services:
     networks:
       - cqrs_ddd_php_network
 
+  cqrs_ddd_php_rabbitmq:
+    container_name: cqrs_ddd_php_rabbitmq
+    image: rabbitmq:3.7.8-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: root
+    restart: always
+    ports:
+       - '5672:5672'
+       - '15672:15672'
+    networks:
+      - cqrs_ddd_php_network
+
 networks:
   cqrs_ddd_php_network:
     name: cqrs_ddd_php_network
