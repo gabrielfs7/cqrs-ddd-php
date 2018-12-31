@@ -4,6 +4,8 @@ namespace Sample\Infrastructure\Event\Store;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class EventStoreSetup
 {
@@ -21,10 +23,8 @@ class EventStoreSetup
         $this->client = $client;
     }
 
-    public function setup(): void
+    public function setup(OutputInterface $output): void
     {
-        // - Delete existent projections.
-
         foreach ($this->eventStoreProjections as $projectionName => $projectionOptions) {
             $projection = file_get_contents($projectionOptions['file']['path']);
 
@@ -33,17 +33,21 @@ class EventStoreSetup
             }
 
             $options = [
-                RequestOptions::HEADERS => [
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Authorization' => 'Basic ' , base64_encode('root:root'),
-                ],
                 RequestOptions::TIMEOUT => 30,
                 RequestOptions::CONNECT_TIMEOUT => 30,
-                RequestOptions::BODY => $projection,
+                'curl' => [
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                    CURLOPT_HTTPHEADER => [
+                        "Content-Type: application/x-www-form-urlencoded",
+                        'Authorization: Basic ' . base64_encode('admin:changeit')
+                    ],
+                ],
+                RequestOptions::FORM_PARAMS => [$projection]
             ];
 
-            $url = sprintf('projections/%s', $projectionOptions['mode']);
-            $url .= '?' . http_build_query(
+            $uri = sprintf('/projections/%s', $projectionOptions['mode']);
+            $uri .= '?' . http_build_query(
                 [
                     'name' => $projectionName,
                     'type' => 'js',
@@ -55,13 +59,18 @@ class EventStoreSetup
                 '%26'
             );
 
-            $response = $this->client->post($url, $options);
+            try {
+                $response = $this->client->post($uri, $options);
 
-            echo PHP_EOL;
-            echo PHP_EOL;
-            echo 'Response: (' . $response->getStatusCode() . ') ' . $response->getBody()->getContents();
-            echo PHP_EOL;
-            echo PHP_EOL;
+                $output->writeln(
+                    'Response: ('
+                    . $response->getStatusCode()
+                    . ') '
+                    . $response->getBody()->getContents()
+                );
+            } catch (Exception $exception) {
+                $output->writeln('[ERROR] ' . $exception->getMessage());
+            }
         }
     }
 }
