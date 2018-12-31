@@ -11,6 +11,8 @@ return [
         'eventstore' => [
             'url' => 'http://cqrs_ddd_php_eventstore:2113',
             'stream' => 'cqrs_ddd_php',
+            'username' => 'admin',
+            'password' => 'changeit',
         ],
         'rabbitmq' => [
             'host' => 'cqrs_ddd_php_rabbitmq',

@@ -1,21 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-use Sample\Infrastructure\Event\Store\EventStoreSetup;
+use Sample\Infrastructure\Event\Store\EventStoreSetUp;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 require_once 'bootstrap.php';
 
-echo PHP_EOL;
-echo PHP_EOL;
-echo '[...] Initializing Projections setup...';
-echo PHP_EOL;
+$output = new ConsoleOutput();
+$output->writeln('[...] Initializing Projections setup...');
 
 $app->getContainer()
-    ->get(EventStoreSetup::class)
-    ->setup(new ConsoleOutput());
+    ->get(EventStoreSetUp::class)
+    ->setUp($output);
 
-echo PHP_EOL;
-echo '[√] Projections setup finished!';
-echo PHP_EOL;
-echo PHP_EOL;
+$output->writeln('[√] Projections setup finished!');

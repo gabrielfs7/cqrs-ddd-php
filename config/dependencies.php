@@ -4,11 +4,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
-use GuzzleHttp\Client;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
 use Sample\Infrastructure\Event\Bus\EventBus;
-use Sample\Infrastructure\Event\Store\EventStoreSetup;
+use Sample\Infrastructure\Event\Store\EventStoreClient;
+use Sample\Infrastructure\Event\Store\EventStoreSetUp;
 
 return [
     EntityManager::class => function (ContainerInterface $container): EntityManager {
@@ -27,21 +27,33 @@ return [
     },
 
     EventBus::class => function (ContainerInterface $container): EventBus {
-        $settings = $container->get('settings')['eventstore'];
-
         return new EventBus(
-            $settings['stream'],
-            new Client(['base_uri' => $settings['url']])
+            $container->get('settings')['eventstore']['stream'],
+            $container->get(EventStoreClient::class)
         );
     },
 
-    EventStoreSetup::class => function (ContainerInterface $container): EventStoreSetup {
+    EventStoreSetUp::class => function (ContainerInterface $container): EventStoreSetUp {
+        return new EventStoreSetUp(
+            $container->get('eventstore-projections'),
+            $container->get(EventStoreClient::class)
+        );
+    },
+
+    EventStoreClient::class => function (ContainerInterface $container): EventStoreClient {
         $settings = $container->get('settings')['eventstore'];
 
-        return new EventStoreSetup(
-            $container->get('eventstore-projections'),
-            new Client(['base_uri' => $settings['url']])
-        );
+        $options = [
+            'base_uri' => $settings['url'],
+            'curl' => [
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/json',
+                    'Authorization: Basic ' . base64_encode($settings['username'] . ':' . $settings['password'])
+                ],
+            ],
+        ];
+
+        return new EventStoreClient($options);
     },
 
     AMQPStreamConnection::class => function (ContainerInterface $container): AMQPStreamConnection {

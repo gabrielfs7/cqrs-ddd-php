@@ -2,14 +2,13 @@
 
 namespace Sample\Infrastructure\Event\Store;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Exception;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class EventStoreSetup
+class EventStoreSetUp
 {
-    /** @var Client */
+    /** @var EventStoreClient */
     private $client;
 
     /** @var array */
@@ -17,13 +16,13 @@ class EventStoreSetup
 
     public function __construct(
         array $eventStoreProjections,
-        Client $client
+        EventStoreClient $client
     ) {
         $this->eventStoreProjections = $eventStoreProjections;
         $this->client = $client;
     }
 
-    public function setup(OutputInterface $output): void
+    public function setUp(OutputInterface $output): void
     {
         foreach ($this->eventStoreProjections as $projectionName => $projectionOptions) {
             $projection = file_get_contents($projectionOptions['file']['path']);
@@ -33,40 +32,31 @@ class EventStoreSetup
             }
 
             $options = [
-                RequestOptions::TIMEOUT => 30,
-                RequestOptions::CONNECT_TIMEOUT => 30,
-                'curl' => [
-                    CURLOPT_RETURNTRANSFER => 1,
-                    CURLOPT_POST => 1,
-                    CURLOPT_HTTPHEADER => [
-                        "Content-Type: application/x-www-form-urlencoded",
-                        'Authorization: Basic ' . base64_encode('admin:changeit')
-                    ],
-                ],
-                RequestOptions::FORM_PARAMS => [$projection]
-            ];
-
-            $uri = sprintf('/projections/%s', $projectionOptions['mode']);
-            $uri .= '?' . http_build_query(
-                [
+                RequestOptions::QUERY => [
                     'name' => $projectionName,
                     'type' => 'js',
                     'enabled' => 'true',
                     'emit' => 'true',
                     'trackemittedstreams' => 'true',
                 ],
-                '',
-                '%26'
-            );
+                'curl' => $this->client->getConfig('curl') + [
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                ],
+                RequestOptions::BODY => $projection
+            ];
+
+            $uri = sprintf('/projections/%s', $projectionOptions['mode']);
 
             try {
                 $response = $this->client->post($uri, $options);
 
                 $output->writeln(
-                    'Response: ('
-                    . $response->getStatusCode()
-                    . ') '
-                    . $response->getBody()->getContents()
+                    sprintf(
+                        'Response: (%s) %s',
+                        $response->getStatusCode(),
+                        $response->getBody()->getContents()
+                    )
                 );
             } catch (Exception $exception) {
                 $output->writeln('[ERROR] ' . $exception->getMessage());

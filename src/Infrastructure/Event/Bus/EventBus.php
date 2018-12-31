@@ -3,9 +3,10 @@
 namespace Sample\Infrastructure\Event\Bus;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use Sample\Domain\Event\Bus\EventBusInterface;
 use Sample\Domain\Event\EventInterface;
+use Sample\Infrastructure\Event\Store\EventStoreClient;
 
 class EventBus implements EventBusInterface
 {
@@ -15,7 +16,7 @@ class EventBus implements EventBusInterface
     /** @var Client */
     private $client;
 
-    public function __construct(string $stream, Client $client)
+    public function __construct(string $stream, EventStoreClient $client)
     {
         $this->stream = $stream;
         $this->client = $client;
@@ -23,17 +24,16 @@ class EventBus implements EventBusInterface
 
     public function notify(EventInterface $event): void
     {
-        $this->client->send(
-            new Request(
-                'POST',
-                sprintf('/streams/%s', $this->stream),
-                [
-                    'Content-type' => 'application/json',
-                    'ES-EventType' => $event->name(),
-                    'ES-EventId' => $event->eventId()
-                ],
-                json_encode($event->data())
-            )
+        $curlOptions = $this->client->getConfig('curl');
+        $curlOptions[CURLOPT_HTTPHEADER][] = 'ES-EventType: ' . $event->name();
+        $curlOptions[CURLOPT_HTTPHEADER][] = 'ES-EventId: ' . $event->eventId();
+
+        $this->client->post(
+            sprintf('/streams/%s', $this->stream),
+            [
+                'curl' => $curlOptions,
+                RequestOptions::BODY => json_encode($event->data())
+            ]
         );
     }
 }
