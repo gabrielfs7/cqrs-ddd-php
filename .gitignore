@@ -3,3 +3,4 @@ reference
 vendor
 bin
 !bin/command-consumer
+!bin/eventstore-setup

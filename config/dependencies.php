@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
 use Sample\Infrastructure\Event\Bus\EventBus;
+use Sample\Infrastructure\Event\Store\EventStoreSetup;
 
 return [
     EntityManager::class => function (ContainerInterface $container): EntityManager {
@@ -29,10 +30,17 @@ return [
         $settings = $container->get('settings')['eventstore'];
 
         return new EventBus(
-            $settings['host'],
-            $settings['port'],
             $settings['stream'],
-            $container->get(Client::class)
+            new Client(['base_uri' => $settings['url']])
+        );
+    },
+
+    EventStoreSetup::class => function (ContainerInterface $container): EventStoreSetup {
+        $settings = $container->get('settings')['eventstore'];
+
+        return new EventStoreSetup(
+            $container->get('eventstore-projections'),
+            new Client(['base_uri' => $settings['url']])
         );
     },
 

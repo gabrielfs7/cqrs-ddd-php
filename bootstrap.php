@@ -9,6 +9,7 @@ $app = new class() extends App {
     protected function configureContainer(ContainerBuilder $builder)
     {
         $builder->addDefinitions(__DIR__ . '/config/settings.php');
+        $builder->addDefinitions(__DIR__ . '/config/projections.php');
         $builder->addDefinitions(__DIR__ . '/config/dependencies.php');
     }
 };

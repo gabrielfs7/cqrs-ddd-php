@@ -1,7 +1,7 @@
 options({
-    resultStreamName: "user-birthdays-result"
+    resultStreamName: ":resultStreamName"
 })
-fromStream('cqrs_ddd_php')
+fromStream(":fromStream")
 .when({
     $init: function() {
         return {

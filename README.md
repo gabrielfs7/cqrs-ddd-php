@@ -119,6 +119,12 @@ Access local EventStore web interface [here](http://localhost:2113).
 - **User**: admin
 - **Pass**: changeit
 
+### Initialize EventStore
+
+```
+docker container exec -it cqrs_ddd_php_app bin/eventstore-setup
+```
+
 #### Projections options
 
 Here you can find interesting links on how to work with projections:

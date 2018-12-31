@@ -9,8 +9,7 @@ return [
         'outputBuffering' => 'append',
         'httpVersion' => '2.0',
         'eventstore' => [
-            'host' => 'http://cqrs_ddd_php_eventstore',
-            'port' => '2113',
+            'url' => 'http://cqrs_ddd_php_eventstore:2113',
             'stream' => 'cqrs_ddd_php',
         ],
         'rabbitmq' => [
@@ -32,7 +31,7 @@ return [
                 'user' => 'root',
                 'password' => 'root',
                 'charset' => 'utf8',
-            ]
-        ]
+            ],
+        ],
     ],
 ];

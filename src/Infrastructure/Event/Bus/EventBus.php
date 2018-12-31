@@ -9,28 +9,16 @@ use Sample\Domain\Event\EventInterface;
 
 class EventBus implements EventBusInterface
 {
-    /** @var Client */
-    private $client;
-
-    /** @var string */
-    private $host;
-
-    /** @var string */
-    private $port;
-
     /** @var string */
     private $stream;
 
-    public function __construct(
-        string $host,
-        string $port,
-        string $stream,
-        Client $client
-    ) {
-        $this->client = $client;
-        $this->host = $host;
-        $this->port = $port;
+    /** @var Client */
+    private $client;
+
+    public function __construct(string $stream, Client $client)
+    {
         $this->stream = $stream;
+        $this->client = $client;
     }
 
     public function notify(EventInterface $event): void
@@ -38,7 +26,7 @@ class EventBus implements EventBusInterface
         $this->client->send(
             new Request(
                 'POST',
-                $this->host  . ':'. $this->port . '/streams/' . $this->stream,
+                sprintf('/streams/%s', $this->stream),
                 [
                     'Content-type' => 'application/json',
                     'ES-EventType' => $event->name(),
