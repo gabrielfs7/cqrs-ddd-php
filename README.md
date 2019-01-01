@@ -129,6 +129,7 @@ docker container exec -it cqrs_ddd_php_app bin/eventstore-setup
 
 Here you can find interesting links on how to work with projections:
 
+- https://eventstore.org/docs/projections/api/index.html
 - https://eventstore.org/docs/getting-started/projections/index.html
 - https://eventstore.org/docs/projections/user-defined-projections/index.html
 
