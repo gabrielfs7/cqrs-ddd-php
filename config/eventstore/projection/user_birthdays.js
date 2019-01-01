@@ -1,7 +1,7 @@
 options({
     resultStreamName: ":resultStreamName"
 })
-fromStream(":fromStream")
+fromStream(':fromStream')
 .when({
     $init: function() {
         return {
@@ -18,4 +18,3 @@ fromStream(":fromStream")
         }
     }
 })
-.outputState()

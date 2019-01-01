@@ -13,4 +13,4 @@ $app->getContainer()
     ->get(EventStoreSetUp::class)
     ->setUp($output);
 
-$output->writeln('[√] Projections setup finished!');
+$output->writeln('[OK] Projections setup finished!');

@@ -10,11 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class EventStoreSetUp
 {
-    /** @var EventStoreClient */
-    private $client;
-
     /** @var array */
     private $eventStoreProjections;
+
+    /** @var EventStoreClient */
+    private $client;
 
     public function __construct(
         array $eventStoreProjections,
@@ -28,25 +28,16 @@ class EventStoreSetUp
     {
         foreach ($this->eventStoreProjections as $projectionName => $projectionOptions) {
             try {
-                $this->deleteStream($projectionName);
-                $this->deleteProjection($projectionName);
-
-                $response = $this->createProjection($projectionName, $projectionOptions);
-
-                $output->writeln(
-                    sprintf(
-                        'Response: (%s) %s',
-                        $response->getStatusCode(),
-                        $response->getBody()->getContents()
-                    )
-                );
+                $this->disableProjection($projectionName, $output);
+                $this->deleteProjection($projectionName, $output);
+                $this->createProjection($projectionName, $projectionOptions, $output);
             } catch (Exception $exception) {
-                $output->writeln(sprintf('[ERROR] (%s) %s', $projectionName, $exception->getMessage()));
+                $output->writeln(sprintf('[ERROR] Projection "%s": %s', $projectionName, $exception->getMessage()));
             }
         }
     }
 
-    private function deleteProjection(string $projectionName): void
+    private function deleteProjection(string $projectionName, OutputInterface $output): void
     {
         try {
             $options = [
@@ -54,30 +45,79 @@ class EventStoreSetUp
                     'deleteStateStream' => 'true',
                     'deleteCheckpointStream' => 'true',
                     'deleteEmittedStreams' => 'true',
-                ]
+                ],
+                RequestOptions::BODY => http_build_query([
+                    'deleteStateStream' => 'true',
+                    'deleteCheckpointStream' => 'true',
+                    'deleteEmittedStreams' => 'true',
+                ])
             ];
 
-            $this->client->delete(sprintf('/projections/%s', $projectionName), $options);
+            $response = $this->client->delete(sprintf('/projection/%s', $projectionName), $options);
+
+            $output->writeln(
+                sprintf(
+                    '[OK] Projection "%s" removed: %s',
+                    $projectionName,
+                    $response->getBody()->getContents()
+                )
+            );
         } catch (BadResponseException $exception) {
             if ($exception->getResponse()->getStatusCode() != 404) {
                 throw $exception;
             }
+
+            $output->writeln(
+                sprintf(
+                    '[WARNING] Projection "%s" not found',
+                    $projectionName
+                )
+            );
         }
     }
 
-    private function deleteStream(string $projectionName): void
+    private function disableProjection(string $projectionName, OutputInterface $output): void
     {
         try {
-            $this->client->delete(sprintf('/streams/%s', $projectionName));
+            $options = [
+                RequestOptions::QUERY => [
+                    'enableRunAs' => 'true'
+                ],
+                'curl' => $this->client->getConfig('curl') + [
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                ],
+                RequestOptions::BODY => 'enableRunAs=true'
+            ];
+
+            $response = $this->client->post(sprintf('/projection/%s/command/disable', $projectionName), $options);
+
+            $output->writeln(
+                sprintf(
+                    '[OK] Projection "%s" disabled: %s',
+                    $projectionName,
+                    $response->getBody()->getContents()
+                )
+            );
         } catch (BadResponseException $exception) {
             if ($exception->getResponse()->getStatusCode() != 404) {
                 throw $exception;
             }
+
+            $output->writeln(
+                sprintf(
+                    '[WARNING] Projection "%s" not found',
+                    $projectionName
+                )
+            );
         }
     }
 
-    private function createProjection(string $projectionName, array $projectionOptions): ResponseInterface
-    {
+    private function createProjection(
+        string $projectionName,
+        array $projectionOptions,
+        OutputInterface $output
+    ): ResponseInterface {
         $uri = sprintf('/projections/%s', $projectionOptions['mode']);
 
         $options = [
@@ -95,7 +135,17 @@ class EventStoreSetUp
             RequestOptions::BODY => $this->parseProjection($projectionOptions)
         ];
 
-        return $this->client->post($uri, $options);
+        $response = $this->client->post($uri, $options);
+
+        $output->writeln(
+            sprintf(
+                'Response: (%s) %s',
+                $response->getStatusCode(),
+                $response->getBody()->getContents()
+            )
+        );
+
+        return $response;
     }
 
     private function parseProjection(array $projectionOptions): string

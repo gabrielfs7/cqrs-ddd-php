@@ -3,12 +3,12 @@ $mappingPath = __DIR__ . '/eventstore/projection/%s';
 
 return [
     'eventstore-projections' => [
-        'user-birthdays-projection' => [
+        'user_birthdays_projection' => [
             'mode' => 'continuous',
             'file' => [
-                'path' => sprintf($mappingPath, 'user-birthdays.js'),
+                'path' => sprintf($mappingPath, 'user_birthdays.js'),
                 'parameters' => [
-                    ':resultStreamName' => 'user-birthdays-projection-result',
+                    ':resultStreamName' => 'user_birthdays_projection_result',
                     ':fromStream' => 'cqrs_ddd_php',
                 ],
             ],
