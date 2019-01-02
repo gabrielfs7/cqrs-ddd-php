@@ -16,10 +16,8 @@ class EventStoreSetUp
     /** @var EventStoreClient */
     private $client;
 
-    public function __construct(
-        array $eventStoreProjections,
-        EventStoreClient $client
-    ) {
+    public function __construct(array $eventStoreProjections, EventStoreClient $client)
+    {
         $this->eventStoreProjections = $eventStoreProjections;
         $this->client = $client;
     }
@@ -32,7 +30,13 @@ class EventStoreSetUp
                 $this->deleteProjection($projectionName, $output);
                 $this->createProjection($projectionName, $projectionOptions, $output);
             } catch (Exception $exception) {
-                $output->writeln(sprintf('[ERROR] Projection "%s": %s', $projectionName, $exception->getMessage()));
+                $output->writeln(
+                    sprintf(
+                        '[ERROR] Projection "%s": %s',
+                        $projectionName,
+                        $exception->getMessage()
+                    )
+                );
             }
         }
     }

@@ -5,16 +5,19 @@ fromStream(':fromStream')
 .when({
     $init: function() {
         return {
-            userId: 0,
-            fullName: null,
-            birthday: null
+            total: 0,
+            data: []
         }
     },
     userCreated: function(state, event) {
         if (event.body.birthday.length > 0) {
-            state.userId = event.body.id;
-            state.fullName = event.body.fullName;
-            state.birthday = event.body.birthday;
+            state.total++;
+            state.data.push({
+                userId: event.body.id,
+                fullName: event.body.fullName,
+                birthday: event.body.birthday
+            });
         }
     }
 })
+.outputState()

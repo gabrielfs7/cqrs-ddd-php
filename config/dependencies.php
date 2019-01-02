@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
+use Sample\Domain\Projection\UserBirthdaysProjection;
 use Sample\Infrastructure\Event\Bus\EventBus;
 use Sample\Infrastructure\Event\Store\EventStoreClient;
 use Sample\Infrastructure\Event\Store\EventStoreSetUp;

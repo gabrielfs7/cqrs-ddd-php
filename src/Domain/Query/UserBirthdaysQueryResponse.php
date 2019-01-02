@@ -2,18 +2,18 @@
 
 namespace Sample\Domain\Query;
 
-
 final class UserBirthdaysQueryResponse implements QueryResponseInterface
 {
-    private $users;
+    /** @var string */
+    private $results;
 
-    public function __construct()
+    public function __construct(array $results)
     {
-        $this->users = [];
+        $this->results = $results;
     }
 
     public function body(): array
     {
-        return $this->users;
+        return $this->results;
     }
 }
