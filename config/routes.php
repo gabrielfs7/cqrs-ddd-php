@@ -2,6 +2,7 @@
 
 use Psr\Container\ContainerInterface;
 use Sample\Application\Action\CreateUserAction;
+use Sample\Application\Action\CreateOrderAction;
 use Sample\Application\Action\ListUserBirthdayAction;
 
 /** @var ContainerInterface $container */
@@ -9,3 +10,4 @@ $container = $app->getContainer();
 
 $app->get('/api/users/birthdays[/]', ListUserBirthdayAction::class);
 $app->post('/api/users[/]', CreateUserAction::class);
+$app->post('/api/orders[/]', CreateOrderAction::class);

@@ -5,10 +5,10 @@ namespace Sample\Application\Action;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
-use Sample\Domain\Command\CreateUserCommand;
+use Sample\Domain\Command\CreateOrderCommand;
 use Slim\Http\StatusCode;
 
-class CreateUserAction extends AbstractAction
+class CreateOrderAction extends AbstractAction
 {
     /** @var CommandBus */
     private $commandBus;
@@ -23,11 +23,9 @@ class CreateUserAction extends AbstractAction
         $payload = $this->parseJsonRequest($request);
 
         $this->commandBus->dispatch(
-            new CreateUserCommand(
-                $payload['fullName'],
-                $payload['username'],
-                $payload['password'],
-                $payload['birthday']
+            new CreateOrderCommand(
+                $payload['userId'],
+                $payload['amount']
             )
         );
 
@@ -37,10 +35,8 @@ class CreateUserAction extends AbstractAction
     protected function getPayloadDefault(): array
     {
         return [
-            'fullName' => null,
-            'username' => null,
-            'password' => null,
-            'birthday' => null,
+            'userId' => null,
+            'amount' => null,
         ];
     }
 }

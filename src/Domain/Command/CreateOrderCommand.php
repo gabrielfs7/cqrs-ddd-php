@@ -2,6 +2,8 @@
 
 namespace Sample\Domain\Command;
 
+use Sample\Domain\ValueObject\OrderId;
+
 final class CreateOrderCommand implements CommandInterface
 {
     /** @var string */
@@ -16,13 +18,11 @@ final class CreateOrderCommand implements CommandInterface
     /** @var float */
     private $amount;
 
-    public function __construct(
-        string $id,
-        string $orderId,
-        string $userId,
-        string $amount
-    ) {
-        $this->id = $id;
+    public function __construct(string $userId, float $amount)
+    {
+        $orderId = (new OrderId())->value();
+
+        $this->id = sprintf('create-order-%s', $orderId);
         $this->orderId = $orderId;
         $this->userId = $userId;
         $this->amount = $amount;
