@@ -1,17 +1,13 @@
 Sample\Domain\Entity\Order:
   type: entity
   repositoryClass: Sample\Domain\Repository\OrderRepository
-  table: Order_
+  table: order_
   id:
     id:
       type: string
       generator:
         strategy: none
   fields:
-    userId:
-      type: integer
-      column: user_id
-      nullable: false
     amount:
       type: float
       column: amount
@@ -20,3 +16,9 @@ Sample\Domain\Entity\Order:
       type: datetime
       column: created_at
       nullable: false
+  manyToOne:
+    user:
+      targetEntity: Sample\Domain\Entity\User
+      joinColumn:
+        name: user_id
+        referencedColumnName: id

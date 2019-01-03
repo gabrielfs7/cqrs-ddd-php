@@ -1,7 +1,7 @@
 Sample\Domain\Entity\User:
   type: entity
   repositoryClass: Sample\Domain\Repository\UserRepository
-  table: User_
+  table: user_
   id:
     id:
       type: string

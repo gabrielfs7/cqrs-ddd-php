@@ -14,8 +14,8 @@ final class Order extends AbstractAggregateRoot
     /** @var OrderId */
     private $id;
 
-    /** @var UserId */
-    private $userId;
+    /** @var User */
+    private $user;
 
     /** @var OrderAmount */
     private $amount;
@@ -50,19 +50,20 @@ final class Order extends AbstractAggregateRoot
 
     public static function create(
         OrderId $id,
-        UserId $userId,
+        User $user,
         OrderAmount $amount
     ): Order {
         $order = new self($id);
         $order->id = $id;
-        $order->userId = $userId;
+        $order->user = $user;
         $order->amount = $amount;
         $order->record(
             new OrderCreatedEvent(
                 $id->value(),
                 [
                     'id' => $id->value(),
-                    'userId' => $userId->value(),
+                    'userId' => $user->id(),
+                    'userFullName' => $user->id(),
                     'amount' => $amount->value(),
                 ]
             )
