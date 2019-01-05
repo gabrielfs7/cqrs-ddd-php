@@ -70,16 +70,7 @@ class EventStoreSetUp
                 )
             );
         } catch (BadResponseException $exception) {
-            if ($exception->getResponse()->getStatusCode() != 404) {
-                throw $exception;
-            }
-
-            $output->writeln(
-                sprintf(
-                    '[WARNING] Projection "%s" not found',
-                    $projectionName
-                )
-            );
+            $this->handleException($projectionName, $exception, $output);
         }
     }
 
@@ -104,16 +95,7 @@ class EventStoreSetUp
                 )
             );
         } catch (BadResponseException $exception) {
-            if ($exception->getResponse()->getStatusCode() != 404) {
-                throw $exception;
-            }
-
-            $output->writeln(
-                sprintf(
-                    '[WARNING] Projection "%s" not found',
-                    $projectionName
-                )
-            );
+            $this->handleException($projectionName, $exception, $output);
         }
     }
 
@@ -138,16 +120,7 @@ class EventStoreSetUp
                 )
             );
         } catch (BadResponseException $exception) {
-            if ($exception->getResponse()->getStatusCode() != 404) {
-                throw $exception;
-            }
-
-            $output->writeln(
-                sprintf(
-                    '[WARNING] Projection "%s" not found',
-                    $projectionName
-                )
-            );
+            $this->handleException($projectionName, $exception, $output);
         }
     }
 
@@ -172,16 +145,7 @@ class EventStoreSetUp
                 )
             );
         } catch (BadResponseException $exception) {
-            if ($exception->getResponse()->getStatusCode() != 404) {
-                throw $exception;
-            }
-
-            $output->writeln(
-                sprintf(
-                    '[WARNING] Projection "%s" not found',
-                    $projectionName
-                )
-            );
+            $this->handleException($projectionName, $exception, $output);
         }
     }
 
@@ -229,5 +193,22 @@ class EventStoreSetUp
         }
 
         return $projection;
+    }
+
+    private function handleException(
+        string $projectionName,
+        BadResponseException $exception,
+        OutputInterface $output
+    ): void {
+        if ($exception->getResponse()->getStatusCode() != 404) {
+            throw $exception;
+        }
+
+        $output->writeln(
+            sprintf(
+                '[WARNING] Projection "%s" not found',
+                $projectionName
+            )
+        );
     }
 }
