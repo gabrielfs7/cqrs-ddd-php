@@ -10,7 +10,27 @@ abstract class AbstractRepository extends EntityRepository
 {
     public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($entityManager, new ClassMetadata(static::class));
+        $entityName = str_replace(
+            'Repository',
+            '',
+            basename(
+                str_replace(
+                    '\\',
+                    '/',
+                    static::class
+                )
+            )
+        );
+
+        $entityClass = str_replace(
+            'Repository',
+            'Entity',
+            __NAMESPACE__
+            )
+            . '\\' .
+            $entityName;
+
+        parent::__construct($entityManager, new ClassMetadata($entityClass));
     }
 
     public function save($entity): void

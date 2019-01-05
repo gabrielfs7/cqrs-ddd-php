@@ -13,7 +13,7 @@ use Sample\Domain\ValueObject\UserPassword;
 
 final class User extends AbstractAggregateRoot
 {
-    /** @var int */
+    /** @var string */
     private $id;
 
     /** @var string */
@@ -36,7 +36,7 @@ final class User extends AbstractAggregateRoot
         $this->createdAt = new DateTime();
     }
 
-    public function id(): ?int
+    public function id(): ?string
     {
         return $this->id;
     }
