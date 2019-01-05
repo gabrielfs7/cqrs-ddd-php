@@ -24,9 +24,12 @@ class EventStoreSetUp
 
     public function setUp(OutputInterface $output): void
     {
+        $this->enableProjection(urlencode('$by_category'), $output);
+
         foreach ($this->eventStoreProjections as $projectionName => $projectionOptions) {
             try {
                 $this->disableProjection($projectionName, $output);
+                $this->abortProjection($projectionName, $output);
                 $this->deleteProjection($projectionName, $output);
                 $this->createProjection($projectionName, $projectionOptions, $output);
             } catch (Exception $exception) {
@@ -84,9 +87,6 @@ class EventStoreSetUp
     {
         try {
             $options = [
-                RequestOptions::QUERY => [
-                    'enableRunAs' => 'true'
-                ],
                 'curl' => $this->client->getConfig('curl') + [
                     CURLOPT_RETURNTRANSFER => 1,
                     CURLOPT_POST => 1,
@@ -99,6 +99,74 @@ class EventStoreSetUp
             $output->writeln(
                 sprintf(
                     '[OK] Projection "%s" disabled: %s',
+                    $projectionName,
+                    $response->getBody()->getContents()
+                )
+            );
+        } catch (BadResponseException $exception) {
+            if ($exception->getResponse()->getStatusCode() != 404) {
+                throw $exception;
+            }
+
+            $output->writeln(
+                sprintf(
+                    '[WARNING] Projection "%s" not found',
+                    $projectionName
+                )
+            );
+        }
+    }
+
+    private function enableProjection(string $projectionName, OutputInterface $output): void
+    {
+        try {
+            $options = [
+                'curl' => $this->client->getConfig('curl') + [
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                ],
+                RequestOptions::BODY => 'enableRunAs=true'
+            ];
+
+            $response = $this->client->post(sprintf('/projection/%s/command/enable', $projectionName), $options);
+
+            $output->writeln(
+                sprintf(
+                    '[OK] Projection "%s" enabled: %s',
+                    $projectionName,
+                    $response->getBody()->getContents()
+                )
+            );
+        } catch (BadResponseException $exception) {
+            if ($exception->getResponse()->getStatusCode() != 404) {
+                throw $exception;
+            }
+
+            $output->writeln(
+                sprintf(
+                    '[WARNING] Projection "%s" not found',
+                    $projectionName
+                )
+            );
+        }
+    }
+
+    private function abortProjection(string $projectionName, OutputInterface $output): void
+    {
+        try {
+            $options = [
+                'curl' => $this->client->getConfig('curl') + [
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                ],
+                RequestOptions::BODY => 'enableRunAs=true'
+            ];
+
+            $response = $this->client->post(sprintf('/projection/%s/command/abort', $projectionName), $options);
+
+            $output->writeln(
+                sprintf(
+                    '[OK] Projection "%s" aborted: %s',
                     $projectionName,
                     $response->getBody()->getContents()
                 )

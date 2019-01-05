@@ -1,5 +1,5 @@
 <?php
-$fromStream = 'cqrs-v1';
+$fromCategory = 'cqrs';
 $mappingPath = __DIR__ . '/eventstore/projection/';
 
 return [
@@ -9,7 +9,7 @@ return [
             'file' => [
                 'path' => $mappingPath,
                 'parameters' => [
-                    ':fromStream' => $fromStream,
+                    ':fromCategory' => $fromCategory,
                 ],
             ],
         ],
@@ -18,7 +18,7 @@ return [
             'file' => [
                 'path' => $mappingPath,
                 'parameters' => [
-                    ':fromStream' => $fromStream,
+                    ':fromCategory' => $fromCategory,
                 ],
             ],
         ],

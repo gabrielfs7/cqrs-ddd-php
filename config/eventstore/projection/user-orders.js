@@ -1,4 +1,4 @@
-fromCategory(':fromStream')
+fromCategory(':fromCategory')
 .foreachStream()
 .when(
     {

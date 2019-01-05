@@ -22,7 +22,7 @@ class UserBirthdaysProjection
     public function list(): array
     {
         $response = $this->eventStoreClient->get(
-            '/projection/user-birthdays/result',
+            '/projection/user-birthdays/state',
             [
                 RequestOptions::QUERY => [
                     'partition' => $this->streamName
