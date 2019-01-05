@@ -6,6 +6,6 @@ class UserCreatedEvent extends AbstractEvent
 {
     public function name(): string
     {
-        return 'userCreated';
+        return 'UserCreated';
     }
 }

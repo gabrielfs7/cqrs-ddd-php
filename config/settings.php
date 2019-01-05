@@ -10,7 +10,7 @@ return [
         'httpVersion' => '2.0',
         'eventstore' => [
             'url' => 'http://cqrs_ddd_php_eventstore:2113',
-            'stream' => 'cqrs_ddd_php',
+            'stream' => 'cqrs-v1',
             'username' => 'admin',
             'password' => 'changeit',
         ],

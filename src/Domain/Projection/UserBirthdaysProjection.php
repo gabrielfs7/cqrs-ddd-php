@@ -2,6 +2,7 @@
 
 namespace Sample\Domain\Projection;
 
+use GuzzleHttp\RequestOptions;
 use Sample\Infrastructure\Event\Store\EventStoreClient;
 
 class UserBirthdaysProjection
@@ -9,14 +10,25 @@ class UserBirthdaysProjection
     /** @var EventStoreClient */
     private $eventStoreClient;
 
-    public function __construct(EventStoreClient $eventStoreClient)
+    /** @var string */
+    private $streamName;
+
+    public function __construct(EventStoreClient $eventStoreClient, string $streamName)
     {
         $this->eventStoreClient = $eventStoreClient;
+        $this->streamName = $streamName;
     }
 
     public function list(): array
     {
-        $response = $this->eventStoreClient->get('/projection/user_birthdays_projection/result');
+        $response = $this->eventStoreClient->get(
+            '/projection/user-birthdays/result',
+            [
+                RequestOptions::QUERY => [
+                    'partition' => $this->streamName
+                ]
+            ]
+        );
 
         return json_decode($response->getBody()->getContents(), true);
     }

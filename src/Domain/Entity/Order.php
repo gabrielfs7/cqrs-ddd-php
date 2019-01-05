@@ -63,7 +63,8 @@ final class Order extends AbstractAggregateRoot
                 [
                     'id' => $id->value(),
                     'userId' => $user->id(),
-                    'userFullName' => $user->id(),
+                    'userFullName' => $user->fullName(),
+                    'createdAt' => $order->createAt()->format(DATE_ATOM),
                     'amount' => $amount->value(),
                 ]
             )

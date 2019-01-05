@@ -1,15 +1,24 @@
 <?php
-$mappingPath = __DIR__ . '/eventstore/projection/%s';
+$fromStream = 'cqrs-v1';
+$mappingPath = __DIR__ . '/eventstore/projection/';
 
 return [
     'eventstore-projections' => [
-        'user_birthdays_projection' => [
+        'user-birthdays' => [
             'mode' => 'continuous',
             'file' => [
-                'path' => sprintf($mappingPath, 'user_birthdays.js'),
+                'path' => $mappingPath,
                 'parameters' => [
-                    ':resultStreamName' => 'user_birthdays_projection_result',
-                    ':fromStream' => 'cqrs_ddd_php',
+                    ':fromStream' => $fromStream,
+                ],
+            ],
+        ],
+        'user-orders' => [
+            'mode' => 'continuous',
+            'file' => [
+                'path' => $mappingPath,
+                'parameters' => [
+                    ':fromStream' => $fromStream,
                 ],
             ],
         ],

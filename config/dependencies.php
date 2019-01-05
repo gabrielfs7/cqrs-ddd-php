@@ -41,6 +41,13 @@ return [
         );
     },
 
+    UserBirthdaysProjection::class => function (ContainerInterface $container): UserBirthdaysProjection {
+        return new UserBirthdaysProjection(
+            $container->get(EventStoreClient::class),
+            $container->get('settings')['eventstore']['stream']
+        );
+    },
+
     EventStoreClient::class => function (ContainerInterface $container): EventStoreClient {
         $settings = $container->get('settings')['eventstore'];
 

@@ -136,7 +136,7 @@ class EventStoreSetUp
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_POST => 1,
             ],
-            RequestOptions::BODY => $this->parseProjection($projectionOptions)
+            RequestOptions::BODY => $this->parseProjection($projectionName, $projectionOptions)
         ];
 
         $response = $this->client->post($uri, $options);
@@ -152,9 +152,9 @@ class EventStoreSetUp
         return $response;
     }
 
-    private function parseProjection(array $projectionOptions): string
+    private function parseProjection(string $projectionName, array $projectionOptions): string
     {
-        $projection = file_get_contents($projectionOptions['file']['path']);
+        $projection = file_get_contents($projectionOptions['file']['path'] . $projectionName . '.js');
 
         foreach ($projectionOptions['file']['parameters'] as $parameterName => $parameterValue) {
             $projection = str_replace($parameterName, $parameterValue, $projection);
