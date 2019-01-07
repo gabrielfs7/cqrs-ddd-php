@@ -4,7 +4,7 @@ namespace Sample\Domain\Query;
 
 use DateTimeInterface;
 
-class UserBirthdaysQuery implements QueryInterface
+class UserBirthdayListQuery implements QueryInterface
 {
     /** @var DateTimeInterface */
     private $referenceDay;

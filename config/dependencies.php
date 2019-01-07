@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
-use Sample\Domain\Projection\UserBirthdaysProjection;
+use Sample\Domain\Projection\UserBirthdayListProjection;
 use Sample\Infrastructure\Event\Bus\EventBus;
 use Sample\Infrastructure\Event\Store\EventStoreClient;
 use Sample\Infrastructure\Event\Store\EventStoreSetUp;
@@ -41,8 +41,8 @@ return [
         );
     },
 
-    UserBirthdaysProjection::class => function (ContainerInterface $container): UserBirthdaysProjection {
-        return new UserBirthdaysProjection(
+    UserBirthdayListProjection::class => function (ContainerInterface $container): UserBirthdayListProjection {
+        return new UserBirthdayListProjection(
             $container->get(EventStoreClient::class),
             $container->get('settings')['eventstore']['stream']
         );

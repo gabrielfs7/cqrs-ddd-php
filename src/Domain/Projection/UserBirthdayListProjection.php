@@ -5,7 +5,7 @@ namespace Sample\Domain\Projection;
 use GuzzleHttp\RequestOptions;
 use Sample\Infrastructure\Event\Store\EventStoreClient;
 
-class UserBirthdaysProjection
+class UserBirthdayListProjection
 {
     /** @var EventStoreClient */
     private $eventStoreClient;

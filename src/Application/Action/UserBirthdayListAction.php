@@ -3,25 +3,24 @@
 namespace Sample\Application\Action;
 
 use DateTimeImmutable;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Query\Bus\QueryBus;
-use Sample\Domain\Query\UserBirthdaysQuery;
+use Sample\Domain\Query\UserBirthdayListQuery;
 use Slim\Http\StatusCode;
 
-class ListUserBirthdayAction extends AbstractAction
+class UserBirthdayListAction extends AbstractAction
 {
     /** @var QueryBus */
     private $queryBus;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(QueryBus $queryBus)
     {
-        $this->queryBus = $container->get(QueryBus::class);
+        $this->queryBus = $queryBus;
     }
 
     public function __invoke(ResponseInterface $response): ResponseInterface
     {
-        $userQuery1 = new UserBirthdaysQuery(new DateTimeImmutable('now'));
+        $userQuery1 = new UserBirthdayListQuery(new DateTimeImmutable('now'));
 
         return $this->jsonResponse(
             $response,

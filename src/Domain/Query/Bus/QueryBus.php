@@ -3,7 +3,8 @@
 namespace Sample\Domain\Query\Bus;
 
 use LogicException;
-use Sample\Domain\Query\Handler\UserBirthdaysQueryHandler;
+use Sample\Domain\Query\Handler\OrderListQueryHandler;
+use Sample\Domain\Query\Handler\UserBirthdayListQueryHandler;
 use Sample\Domain\Query\Handler\QueryHandlerInterface;
 use Sample\Domain\Query\QueryInterface;
 use Sample\Domain\Query\QueryResponseInterface;
@@ -13,10 +14,13 @@ final class QueryBus implements QueryBusInterface
     /** @var QueryHandlerInterface[] */
     private $queryHandlers = [];
 
-    public function __construct(UserBirthdaysQueryHandler $userBirthdaysQueryHandler)
-    {
+    public function __construct(
+        UserBirthdayListQueryHandler $userBirthdaysQueryHandler,
+        OrderListQueryHandler $orderListQueryHandler
+    ) {
         $this->queryHandlers = [
-            $userBirthdaysQueryHandler
+            $userBirthdaysQueryHandler,
+            $orderListQueryHandler
         ];
     }
 

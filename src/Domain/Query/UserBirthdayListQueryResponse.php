@@ -2,7 +2,7 @@
 
 namespace Sample\Domain\Query;
 
-final class UserBirthdaysQueryResponse implements QueryResponseInterface
+final class UserBirthdayListQueryResponse implements QueryResponseInterface
 {
     /** @var string */
     private $results;
