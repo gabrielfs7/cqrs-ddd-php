@@ -12,4 +12,4 @@ $container = $app->getContainer();
 $app->get('/api/users/birthdays[/]', UserBirthdayListAction::class);
 $app->post('/api/users[/]', CreateUserAction::class);
 $app->post('/api/orders[/]', CreateOrderAction::class);
-$app->post('/api/orders[/]', OrderListAction::class);
+$app->get('/api/orders[/]', OrderListAction::class);

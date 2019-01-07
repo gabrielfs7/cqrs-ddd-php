@@ -30,6 +30,9 @@ class UserBirthdayListProjection
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true);
+        return json_decode($response->getBody()->getContents(), true) ?? [
+                'total' => 0,
+                'data' => []
+            ];
     }
 }
