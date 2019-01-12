@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: CQRS API
+  description: Sample API to explain CQRS
+servers:
+  - url: https://localhost:8001/public/api
+security:
+  - BasicAuth: []
+paths:
+  /api/users/birthdays:
+    get:
+      description: Returns a list of user birthdays
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Name'
+      responses:
+        '200':
+          description: Successfully returned the list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Birthday'
+        '400':
+          $ref: '#/components/responses/400Error'
+  /api/orders:
+    get:
+      description: Returns a list of user orders
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Name'
+      responses:
+        '200':
+          description: Successfully returned the list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/400Error'
+    post:
+      description: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Successfully created a new registry
+        '400':
+          $ref: '#/components/responses/400Error'
+  /api/users:
+    get:
+      description: Returns a list of user
+      parameters:
+        - $ref: '#/components/parameters/PageLimit'
+        - $ref: '#/components/parameters/PageOffset'
+        - $ref: '#/components/parameters/Name'
+      responses:
+        '200':
+          description: Successfully returned the list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400Error'
+    post:
+      description: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Successfully created a new registry
+        '400':
+          $ref: '#/components/responses/400Error'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Birthday:
+      type: object
+      required:
+        - name
+      properties:
+        userId:
+          type: string
+        fullName:
+          type: string
+        birthday:
+          type: string
+    Order:
+      type: object
+      required:
+        - name
+      properties:
+        userId:
+          type: string
+        fullName:
+          type: string
+        birthday:
+          type: string
+    User:
+      type: object
+      required:
+        - fullName
+        - username
+        - password
+        - birthday
+      properties:
+        id:
+          type: string
+        fullName:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        birthday:
+          type: string
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+  parameters:
+    Name:
+      name: name
+      in: query
+      description: Name to search
+      schema:
+        type: string
+    PageLimit:
+      name: limit
+      in: query
+      description: Limits the number of items on a page
+      schema:
+        type: integer
+    PageOffset:
+      name: offset
+      in: query
+      description: Specifies the page number of registries displayed
+      schema:
+        type: integer
+  responses:
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string

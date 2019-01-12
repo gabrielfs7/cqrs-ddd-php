@@ -5,6 +5,8 @@ fromCategory(':fromCategory')
         $init: function() {
             return {
                 total: 0,
+                offset: 0,
+                limit: 0,
                 data: []
             }
         },
