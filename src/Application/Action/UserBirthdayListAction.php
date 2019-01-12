@@ -20,12 +20,12 @@ class UserBirthdayListAction extends AbstractAction
 
     public function __invoke(ResponseInterface $response): ResponseInterface
     {
-        $userQuery1 = new UserBirthdayListQuery(new DateTimeImmutable('now'));
+        $query = new UserBirthdayListQuery(new DateTimeImmutable('now'));
 
         return $this->jsonResponse(
             $response,
             StatusCode::HTTP_OK,
-            $this->queryBus->ask($userQuery1)->body()
+            $this->queryBus->ask($query)->body()
         );
     }
 }

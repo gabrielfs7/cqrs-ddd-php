@@ -5,10 +5,10 @@ namespace Sample\Application\Action;
 use DateTimeImmutable;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Query\Bus\QueryBus;
-use Sample\Domain\Query\OrderListQuery;
+use Sample\Domain\Query\UserListQuery;
 use Slim\Http\StatusCode;
 
-class OrderListAction extends AbstractAction
+class UserListAction extends AbstractAction
 {
     /** @var QueryBus */
     private $queryBus;
@@ -20,7 +20,7 @@ class OrderListAction extends AbstractAction
 
     public function __invoke(ResponseInterface $response): ResponseInterface
     {
-        $query = new OrderListQuery(new DateTimeImmutable('now'));
+        $query = new UserListQuery(new DateTimeImmutable('now'));
 
         return $this->jsonResponse(
             $response,
