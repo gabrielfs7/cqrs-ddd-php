@@ -20,11 +20,13 @@ final class CommandConsumer
     public function __construct(
         AMQPStreamConnection $streamConnection,
         CreateUserCommandHandler $createUserCommandHandler,
+        UpdateUserCommandHandler $updateUserCommandHandler,
         CreateOrderCommandHandler $createOrderCommandHandler
     ) {
         $this->streamConnection = $streamConnection;
         $this->commandHandlers = [
             $createUserCommandHandler,
+            $updateUserCommandHandler,
             $createOrderCommandHandler
         ];
     }

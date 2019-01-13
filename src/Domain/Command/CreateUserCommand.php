@@ -3,68 +3,26 @@
 namespace Sample\Domain\Command;
 
 use DateTime;
-use DateTimeInterface;
 use Sample\Domain\ValueObject\UserId;
 
-final class CreateUserCommand implements CommandInterface
+final class CreateUserCommand extends AbstractSaveUserCommand
 {
     /** @var string */
-    private $id;
-
-    /** @var string */
-    private $userId;
-
-    /** @var string */
-    private $username;
-
-    /** @var DateTimeInterface */
-    private $birthday;
-
-    /** @var string */
-    private $fullName;
-
-    /** @var string */
-    private $password;
+    protected $password;
 
     public function __construct(
         string $fullName,
         string $username,
-        string $password,
-        string $birthday
+        string $birthday,
+        string $password
     ) {
-        $userId = (new UserId())->value();
-
-        $this->id = sprintf('create-user-%s', $userId);
-        $this->userId = $userId;
+        $this->userId = (new UserId())->value();
         $this->username = $username;
         $this->birthday = new DateTime($birthday);
         $this->fullName = $fullName;
         $this->password = $password;
-    }
 
-    public function id(): string
-    {
-        return $this->id;
-    }
-
-    public function userId(): string
-    {
-        return $this->userId;
-    }
-
-    public function username(): string
-    {
-        return $this->username;
-    }
-
-    public function birthday(): DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    public function fullName(): string
-    {
-        return $this->fullName;
+        $this->id = sprintf('create-user-%s', $this->userId);
     }
 
     public function password(): string

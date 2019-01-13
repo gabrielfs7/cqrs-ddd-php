@@ -5,10 +5,10 @@ namespace Sample\Application\Action;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
-use Sample\Domain\Command\CreateUserCommand;
+use Sample\Domain\Command\UpdateUserCommand;
 use Slim\Http\StatusCode;
 
-class CreateUserAction extends AbstractAction
+class UpdateUserAction extends AbstractAction
 {
     /** @var CommandBus */
     private $commandBus;
@@ -18,16 +18,19 @@ class CreateUserAction extends AbstractAction
         $this->commandBus = $commandBus;
     }
 
-    public function __invoke(RequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
+    public function __invoke(
+        RequestInterface $request,
+        ResponseInterface $response,
+        string $userId
+    ): ResponseInterface {
         $payload = $this->parseJsonRequest($request);
 
         $this->commandBus->dispatch(
-            new CreateUserCommand(
+            new UpdateUserCommand(
+                $userId,
                 $payload['fullName'],
                 $payload['username'],
-                $payload['birthday'],
-                $payload['password']
+                $payload['birthday']
             )
         );
 
@@ -40,7 +43,6 @@ class CreateUserAction extends AbstractAction
             'fullName' => null,
             'username' => null,
             'birthday' => null,
-            'password' => null,
         ];
     }
 }

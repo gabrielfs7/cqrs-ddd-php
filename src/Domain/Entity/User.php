@@ -4,6 +4,7 @@ namespace Sample\Domain\Entity;
 
 use DateTime;
 use DateTimeInterface;
+use Sample\Domain\Event\UpdateUserEvent;
 use Sample\Domain\Event\UserCreatedEvent;
 use Sample\Domain\ValueObject\UserBirthday;
 use Sample\Domain\ValueObject\UserFullName;
@@ -64,6 +65,29 @@ final class User extends AbstractAggregateRoot
     public function createAt(): DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function update(
+        UserFullName $fullName,
+        UserBirthday $birthday,
+        Username $username
+    ): self {
+        $this->fullName = $fullName->value();
+        $this->birthday = $birthday->value();
+        $this->username = $username->value();
+
+        $this->record(
+            new UpdateUserEvent(
+                $this->id(),
+                [
+                    'fullName' => $this->fullName,
+                    'birthday' => $this->birthday,
+                    'username' => $this->username,
+                ]
+            )
+        );
+
+        return $this;
     }
 
     public static function create(
