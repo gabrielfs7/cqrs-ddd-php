@@ -6,6 +6,7 @@ use LogicException;
 use Sample\Domain\Query\Handler\OrderListQueryHandler;
 use Sample\Domain\Query\Handler\UserBirthdayListQueryHandler;
 use Sample\Domain\Query\Handler\QueryHandlerInterface;
+use Sample\Domain\Query\Handler\UserListQueryHandler;
 use Sample\Domain\Query\QueryInterface;
 use Sample\Domain\Query\QueryResponseInterface;
 
@@ -16,10 +17,12 @@ final class QueryBus implements QueryBusInterface
 
     public function __construct(
         UserBirthdayListQueryHandler $userBirthdaysQueryHandler,
+        UserListQueryHandler $userListQueryHandler,
         OrderListQueryHandler $orderListQueryHandler
     ) {
         $this->queryHandlers = [
             $userBirthdaysQueryHandler,
+            $userListQueryHandler,
             $orderListQueryHandler
         ];
     }
