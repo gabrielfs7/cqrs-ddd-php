@@ -22,5 +22,14 @@ return [
                 ],
             ],
         ],
+        'users' => [
+            'mode' => 'continuous',
+            'file' => [
+                'path' => $mappingPath,
+                'parameters' => [
+                    ':fromCategory' => $fromCategory,
+                ],
+            ],
+        ],
     ],
 ];

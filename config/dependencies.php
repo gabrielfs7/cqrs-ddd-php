@@ -8,6 +8,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Psr\Container\ContainerInterface;
 use Sample\Domain\Projection\OrderListProjection;
 use Sample\Domain\Projection\UserBirthdayListProjection;
+use Sample\Domain\Projection\UserListProjection;
 use Sample\Infrastructure\Event\Bus\EventBus;
 use Sample\Infrastructure\Event\Store\EventStoreClient;
 use Sample\Infrastructure\Event\Store\EventStoreSetUp;
@@ -51,6 +52,13 @@ return [
 
     OrderListProjection::class => function (ContainerInterface $container): OrderListProjection {
         return new OrderListProjection(
+            $container->get(EventStoreClient::class),
+            $container->get('settings')['eventstore']['stream']
+        );
+    },
+
+    UserListProjection::class => function (ContainerInterface $container): UserListProjection {
+        return new UserListProjection(
             $container->get(EventStoreClient::class),
             $container->get('settings')['eventstore']['stream']
         );
