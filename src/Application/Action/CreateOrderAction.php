@@ -25,7 +25,9 @@ class CreateOrderAction extends AbstractAction
         $this->commandBus->dispatch(
             new CreateOrderCommand(
                 $payload['userId'],
-                $payload['amount']
+                $payload['amount'],
+                $payload['sku'],
+                $payload['status']
             )
         );
 

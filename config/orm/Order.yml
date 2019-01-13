@@ -22,3 +22,8 @@ Sample\Domain\Entity\Order:
       joinColumn:
         name: user_id
         referencedColumnName: id
+    product:
+      targetEntity: Sample\Domain\Entity\Product
+      joinColumn:
+        name: product_id
+        referencedColumnName: id

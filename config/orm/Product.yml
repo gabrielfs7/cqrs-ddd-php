@@ -1,0 +1,22 @@
+Sample\Domain\Entity\Product:
+  type: entity
+  repositoryClass: Sample\Domain\Repository\ProductRepository
+  table: product_
+  id:
+    id:
+      type: string
+      generator:
+        strategy: NONE
+  fields:
+    sku:
+      type: string
+      column: sku
+      nullable: false
+    name:
+      type: string
+      column: name
+      nullable: false
+    createdAt:
+      type: datetime
+      column: created_at
+      nullable: false
