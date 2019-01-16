@@ -26,8 +26,7 @@ class CreateOrderAction extends AbstractAction
             new CreateOrderCommand(
                 $payload['userId'],
                 $payload['amount'],
-                $payload['sku'],
-                $payload['status']
+                $payload['productSku']
             )
         );
 

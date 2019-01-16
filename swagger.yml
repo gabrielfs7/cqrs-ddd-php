@@ -123,14 +123,16 @@ components:
     Order:
       type: object
       required:
-        - name
+        - userId
+        - productSku
+        - amount
       properties:
         userId:
           type: string
-        fullName:
+        productSku:
           type: string
-        birthday:
-          type: string
+        amount:
+          type: float
     User:
       type: object
       required:
