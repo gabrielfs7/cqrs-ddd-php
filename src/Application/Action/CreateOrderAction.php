@@ -37,6 +37,7 @@ class CreateOrderAction extends AbstractAction
     {
         return [
             'userId' => null,
+            'productSku' => null,
             'amount' => null,
         ];
     }

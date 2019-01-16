@@ -18,7 +18,9 @@ fromCategory(':fromCategory')
                     orderCreatedAt: event.body.createdAt,
                     orderAmount: event.body.amount,
                     userId: event.body.userId,
-                    userFullName: event.body.userFullName
+                    userFullName: event.body.userFullName,
+                    productName: event.body.productName,
+                    productSku: event.body.productSku
                 }
             );
         }
