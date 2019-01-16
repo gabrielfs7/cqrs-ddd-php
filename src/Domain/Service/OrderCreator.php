@@ -52,7 +52,7 @@ class OrderCreator
         $user = $this->userRepository->find($userId->value());
 
         /** @var Product $product */
-        $product = $this->productRepository->findBy(['sku' => $productSku->value()]);
+        $product = $this->productRepository->findOneBy(['sku' => $productSku->value()]);
 
         $order = Order::create($id, $user, $product, $amount, OrderStatus::pending());
 
