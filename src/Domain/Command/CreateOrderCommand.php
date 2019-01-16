@@ -19,12 +19,9 @@ final class CreateOrderCommand implements CommandInterface
     private $amount;
 
     /** @var string */
-    private $sku;
+    private $productSku;
 
-    /** @var string */
-    private $status;
-
-    public function __construct(string $userId, float $amount, string $sku, string $status)
+    public function __construct(string $userId, float $amount, string $productSku)
     {
         $orderId = (new OrderId())->value();
 
@@ -32,8 +29,7 @@ final class CreateOrderCommand implements CommandInterface
         $this->orderId = $orderId;
         $this->userId = $userId;
         $this->amount = $amount;
-        $this->sku = $sku;
-        $this->status = $status;
+        $this->productSku = $productSku;
     }
 
     public function id(): string
@@ -56,13 +52,8 @@ final class CreateOrderCommand implements CommandInterface
         return $this->amount;
     }
 
-    public function getSku(): string
+    public function productSku(): string
     {
-        return $this->sku;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
+        return $this->productSku;
     }
 }

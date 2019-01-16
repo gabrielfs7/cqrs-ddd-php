@@ -7,10 +7,15 @@ use DateTimeInterface;
 use Sample\Domain\Event\OrderCreatedEvent;
 use Sample\Domain\ValueObject\OrderAmount;
 use Sample\Domain\ValueObject\OrderId;
+use Sample\Domain\ValueObject\OrderStatus;
 use Sample\Domain\ValueObject\UserId;
 
 final class Order extends AbstractAggregateRoot
 {
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_APPROVED = 'approved';
+    public const STATUS_CANCELED = 'canceled';
+
     /** @var OrderId */
     private $id;
 
@@ -19,6 +24,12 @@ final class Order extends AbstractAggregateRoot
 
     /** @var OrderAmount */
     private $amount;
+
+    /** @var Product */
+    private $product;
+
+    /** @var string */
+    private $orderStatus;
 
     /** @var DateTimeInterface */
     private $createdAt;
@@ -43,6 +54,11 @@ final class Order extends AbstractAggregateRoot
         return $this->amount;
     }
 
+    public function product(): Product
+    {
+        return $this->product;
+    }
+
     public function createAt(): DateTimeInterface
     {
         return $this->createdAt;
@@ -51,12 +67,16 @@ final class Order extends AbstractAggregateRoot
     public static function create(
         OrderId $id,
         User $user,
-        OrderAmount $amount
+        Product $product,
+        OrderAmount $amount,
+        OrderStatus $orderStatus
     ): Order {
         $order = new self($id);
         $order->id = $id;
         $order->user = $user;
+        $order->product = $product;
         $order->amount = $amount;
+        $order->orderStatus = $orderStatus->value();
         $order->record(
             new OrderCreatedEvent(
                 $id->value(),
@@ -64,8 +84,10 @@ final class Order extends AbstractAggregateRoot
                     'id' => $id->value(),
                     'userId' => $user->id(),
                     'userFullName' => $user->fullName(),
-                    'createdAt' => $order->createAt()->format(DATE_ATOM),
+                    'productName' => $product->name(),
+                    'productSku' => $product->sku(),
                     'amount' => $amount->value(),
+                    'createdAt' => $order->createAt()->format(DATE_ATOM),
                 ]
             )
         );

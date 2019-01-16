@@ -3,6 +3,7 @@
 namespace Sample\Domain\Service;
 
 use Sample\Domain\Entity\Order;
+use Sample\Domain\Entity\Product;
 use Sample\Domain\Entity\User;
 use Sample\Domain\Event\Publisher\OrderEventPublisher;
 use Sample\Domain\Repository\OrderRepository;
@@ -44,18 +45,16 @@ class OrderCreator
     public function create(
         OrderId $id,
         UserId $userId,
-        OrderAmount $amount,
         ProductSku $productSku,
-        OrderStatus $orderStatus
+        OrderAmount $amount
     ): void {
         /** @var User $user */
         $user = $this->userRepository->find($userId->value());
 
+        /** @var Product $product */
         $product = $this->productRepository->findBy(['sku' => $productSku->value()]);
 
-        $order = Order::create($id, $user, $amount);
-
-        //FIXME @TODO Save order with product
+        $order = Order::create($id, $user, $product, $amount, OrderStatus::pending());
 
         $this->orderRepository->save($order);
 

@@ -7,6 +7,7 @@ use Sample\Domain\Command\CreateOrderCommand;
 use Sample\Domain\Service\OrderCreator;
 use Sample\Domain\ValueObject\OrderAmount;
 use Sample\Domain\ValueObject\OrderId;
+use Sample\Domain\ValueObject\ProductSku;
 use Sample\Domain\ValueObject\UserId;
 
 final class CreateOrderCommandHandler implements CommandHandlerInterface
@@ -24,6 +25,7 @@ final class CreateOrderCommandHandler implements CommandHandlerInterface
         $this->orderCreator->create(
             new OrderId($command->orderId()),
             new UserId($command->userId()),
+            new ProductSku($command->productSku()),
             new OrderAmount($command->amount())
         );
     }
