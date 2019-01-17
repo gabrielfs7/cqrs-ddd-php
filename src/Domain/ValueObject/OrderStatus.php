@@ -9,7 +9,7 @@ class OrderStatus
     /** @var string */
     private $status;
 
-    private function __construct(string $status)
+    public function __construct(string $status)
     {
         $this->status = $status;
     }

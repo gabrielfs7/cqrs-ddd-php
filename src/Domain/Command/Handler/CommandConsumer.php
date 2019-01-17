@@ -21,13 +21,15 @@ final class CommandConsumer
         AMQPStreamConnection $streamConnection,
         CreateUserCommandHandler $createUserCommandHandler,
         UpdateUserCommandHandler $updateUserCommandHandler,
-        CreateOrderCommandHandler $createOrderCommandHandler
+        CreateOrderCommandHandler $createOrderCommandHandler,
+        UpdateOrderCommandHandler $updateOrderCommandHandler
     ) {
         $this->streamConnection = $streamConnection;
         $this->commandHandlers = [
             $createUserCommandHandler,
             $updateUserCommandHandler,
-            $createOrderCommandHandler
+            $createOrderCommandHandler,
+            $updateOrderCommandHandler
         ];
     }
 

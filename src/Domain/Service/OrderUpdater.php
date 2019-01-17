@@ -3,15 +3,10 @@
 namespace Sample\Domain\Service;
 
 use Sample\Domain\Entity\Order;
-use Sample\Domain\Entity\User;
 use Sample\Domain\Event\Publisher\OrderEventPublisher;
-use Sample\Domain\Event\Publisher\UserEventPublisher;
 use Sample\Domain\Repository\OrderRepository;
-use Sample\Domain\Repository\UserRepository;
-use Sample\Domain\ValueObject\UserBirthday;
-use Sample\Domain\ValueObject\UserFullName;
-use Sample\Domain\ValueObject\UserId;
-use Sample\Domain\ValueObject\Username;
+use Sample\Domain\ValueObject\OrderId;
+use Sample\Domain\ValueObject\OrderStatus;
 
 class OrderUpdater
 {
@@ -29,15 +24,11 @@ class OrderUpdater
         $this->orderEventPublisher = $orderEventPublisher;
     }
 
-    public function update(
-        UserId $userId,
-        UserFullName $fullName,
-        UserBirthday $birthday,
-        Username $username
-    ): void {
+    public function update(OrderId $orderId, OrderStatus $orderStatus): void
+    {
         /** @var Order $order */
-        $order = $this->orderRepository->find($userId->value());
-        $order->update($fullName, $birthday, $username);
+        $order = $this->orderRepository->find($orderId->value());
+        $order->update($order, $orderStatus);
 
         $this->orderRepository->save($order);
 
