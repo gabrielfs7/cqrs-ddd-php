@@ -5,10 +5,10 @@ namespace Sample\Domain\Entity;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Sample\Domain\Event\OrderCreatedEvent;
+use Sample\Domain\Event\OrderUpdatedEvent;
 use Sample\Domain\ValueObject\OrderAmount;
 use Sample\Domain\ValueObject\OrderId;
 use Sample\Domain\ValueObject\OrderStatus;
-use Sample\Domain\ValueObject\UserId;
 
 final class Order extends AbstractAggregateRoot
 {
@@ -16,13 +16,13 @@ final class Order extends AbstractAggregateRoot
     public const STATUS_APPROVED = 'approved';
     public const STATUS_CANCELED = 'canceled';
 
-    /** @var OrderId */
+    /** @var string */
     private $id;
 
     /** @var User */
     private $user;
 
-    /** @var OrderAmount */
+    /** @var float */
     private $amount;
 
     /** @var Product */
@@ -39,19 +39,31 @@ final class Order extends AbstractAggregateRoot
         $this->createdAt = new DateTimeImmutable();
     }
 
-    public function id(): OrderId
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function userId(): UserId
+    public function user(): User
     {
-        return $this->userId();
+        return $this->user();
     }
 
-    public function amount(): OrderAmount
+    public function amount(): float
     {
         return $this->amount;
+    }
+
+    public function status(): string
+    {
+        return $this->orderStatus;
+    }
+
+    public function changeStatus(OrderStatus $orderStatus): self
+    {
+        $this->orderStatus = $orderStatus->value();
+
+        return $this;
     }
 
     public function product(): Product
@@ -75,7 +87,7 @@ final class Order extends AbstractAggregateRoot
         $order->id = $id;
         $order->user = $user;
         $order->product = $product;
-        $order->amount = $amount;
+        $order->amount = $amount->value();
         $order->orderStatus = $orderStatus->value();
         $order->record(
             new OrderCreatedEvent(
@@ -87,7 +99,24 @@ final class Order extends AbstractAggregateRoot
                     'productName' => $product->name(),
                     'productSku' => $product->sku(),
                     'amount' => $amount->value(),
+                    'status' => $orderStatus->value(),
                     'createdAt' => $order->createAt()->format(DATE_ATOM),
+                ]
+            )
+        );
+
+        return $order;
+    }
+
+    public static function update(Order $order, OrderStatus $orderStatus): Order
+    {
+        $order->changeStatus($orderStatus);
+        $order->record(
+            new OrderUpdatedEvent(
+                (string)$order->id(),
+                [
+                    'id' => (string)$order->id(),
+                    'orderStatus' => (string)$orderStatus,
                 ]
             )
         );

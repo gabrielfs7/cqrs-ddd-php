@@ -26,7 +26,6 @@ class OrderCreator
     /** @var ProductRepository */
     private $productRepository;
 
-
     /** @var OrderEventPublisher */
     private $orderEventPublisher;
 
