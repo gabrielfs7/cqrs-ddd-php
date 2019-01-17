@@ -2,7 +2,7 @@
 
 namespace Sample\Domain\Event;
 
-class UpdateUserEvent extends AbstractEvent
+class UserUpdatedEvent extends AbstractEvent
 {
     public function name(): string
     {

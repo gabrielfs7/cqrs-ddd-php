@@ -4,7 +4,7 @@ namespace Sample\Domain\Entity;
 
 use DateTime;
 use DateTimeInterface;
-use Sample\Domain\Event\UpdateUserEvent;
+use Sample\Domain\Event\UserUpdatedEvent;
 use Sample\Domain\Event\UserCreatedEvent;
 use Sample\Domain\ValueObject\UserBirthday;
 use Sample\Domain\ValueObject\UserFullName;
@@ -77,7 +77,7 @@ final class User extends AbstractAggregateRoot
         $this->username = $username->value();
 
         $this->record(
-            new UpdateUserEvent(
+            new UserUpdatedEvent(
                 $this->id(),
                 [
                     'fullName' => $this->fullName,
