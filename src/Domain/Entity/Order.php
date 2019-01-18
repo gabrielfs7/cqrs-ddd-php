@@ -10,7 +10,7 @@ use Sample\Domain\ValueObject\OrderAmount;
 use Sample\Domain\ValueObject\OrderId;
 use Sample\Domain\ValueObject\OrderStatus;
 
-final class Order extends AbstractAggregateRoot
+class Order extends AbstractAggregateRoot
 {
     public const STATUS_PENDING = 'pending';
     public const STATUS_APPROVED = 'approved';

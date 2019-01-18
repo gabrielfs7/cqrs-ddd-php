@@ -12,7 +12,7 @@ use Sample\Domain\ValueObject\UserId;
 use Sample\Domain\ValueObject\Username;
 use Sample\Domain\ValueObject\UserPassword;
 
-final class User extends AbstractAggregateRoot
+class User extends AbstractAggregateRoot
 {
     /** @var string */
     private $id;

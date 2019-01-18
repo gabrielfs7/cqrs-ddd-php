@@ -2,26 +2,15 @@
 
 namespace Sample\Domain\Command;
 
-use Sample\Domain\ValueObject\OrderId;
-use Sample\Domain\ValueObject\OrderStatus;
-
 final class UpdateOrderCommand extends AbstractSaveOrderCommand
 {
     /** @var string */
-    private $orderId;
-
-    /** @var string */
     private $orderStatus;
 
-    public function __construct(OrderId $orderId, OrderStatus $orderStatus)
+    public function __construct(string $orderId, string $orderStatus)
     {
-        $this->orderId = $orderId->value();
-        $this->orderStatus = $orderStatus->value();
-    }
-
-    public function orderId(): string
-    {
-        return $this->orderId;
+        $this->orderId = $orderId;
+        $this->orderStatus = $orderStatus;
     }
 
     public function orderStatus(): string

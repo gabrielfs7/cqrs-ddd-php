@@ -8,7 +8,7 @@ use Sample\Domain\ValueObject\ProductId;
 use Sample\Domain\ValueObject\ProductName;
 use Sample\Domain\ValueObject\ProductSku;
 
-final class Product extends AbstractAggregateRoot
+class Product extends AbstractAggregateRoot
 {
     /** @var string */
     private $id;

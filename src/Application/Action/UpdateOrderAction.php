@@ -5,7 +5,7 @@ namespace Sample\Application\Action;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sample\Domain\Command\Bus\CommandBus;
-use Sample\Domain\Command\UpdateUserCommand;
+use Sample\Domain\Command\UpdateOrderCommand;
 use Slim\Http\StatusCode;
 
 class UpdateOrderAction extends AbstractAction
@@ -21,16 +21,14 @@ class UpdateOrderAction extends AbstractAction
     public function __invoke(
         RequestInterface $request,
         ResponseInterface $response,
-        string $userId
+        string $orderId
     ): ResponseInterface {
         $payload = $this->parseJsonRequest($request);
 
         $this->commandBus->dispatch(
-            new UpdateUserCommand(
-                $userId,
-                $payload['fullName'],
-                $payload['username'],
-                $payload['birthday']
+            new UpdateOrderCommand(
+                $orderId,
+                $payload['status']
             )
         );
 
@@ -40,9 +38,7 @@ class UpdateOrderAction extends AbstractAction
     protected function getPayloadDefault(): array
     {
         return [
-            'fullName' => null,
-            'username' => null,
-            'birthday' => null,
+            'status' => null,
         ];
     }
 }
