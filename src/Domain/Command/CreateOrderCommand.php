@@ -4,16 +4,10 @@ namespace Sample\Domain\Command;
 
 use Sample\Domain\ValueObject\OrderId;
 
-final class CreateOrderCommand implements CommandInterface
+final class CreateOrderCommand extends AbstractSaveOrderCommand
 {
     /** @var string */
-    private $id;
-
-    /** @var string */
     private $userId;
-
-    /** @var string */
-    private $orderId;
 
     /** @var float */
     private $amount;
@@ -32,16 +26,6 @@ final class CreateOrderCommand implements CommandInterface
         $this->productSku = $productSku;
     }
 
-    public function id(): string
-    {
-        return $this->id;
-    }
-
-    public function orderId(): string
-    {
-        return $this->orderId;
-    }
-
     public function userId(): string
     {
         return $this->userId;
@@ -55,5 +39,10 @@ final class CreateOrderCommand implements CommandInterface
     public function productSku(): string
     {
         return $this->productSku;
+    }
+
+    public function id(): string
+    {
+        return sprintf('create-order-%s', $this->orderId);
     }
 }

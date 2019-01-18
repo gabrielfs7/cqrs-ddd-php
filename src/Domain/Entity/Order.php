@@ -29,7 +29,7 @@ final class Order extends AbstractAggregateRoot
     private $product;
 
     /** @var string */
-    private $orderStatus;
+    private $status;
 
     /** @var DateTimeInterface */
     private $createdAt;
@@ -56,12 +56,12 @@ final class Order extends AbstractAggregateRoot
 
     public function status(): string
     {
-        return $this->orderStatus;
+        return $this->status;
     }
 
     public function changeStatus(OrderStatus $orderStatus): self
     {
-        $this->orderStatus = $orderStatus->value();
+        $this->status = $orderStatus->value();
 
         return $this;
     }
@@ -88,7 +88,7 @@ final class Order extends AbstractAggregateRoot
         $order->user = $user;
         $order->product = $product;
         $order->amount = $amount->value();
-        $order->orderStatus = $orderStatus->value();
+        $order->status = $orderStatus->value();
         $order->record(
             new OrderCreatedEvent(
                 $id->value(),

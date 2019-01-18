@@ -12,6 +12,10 @@ Sample\Domain\Entity\Order:
       type: float
       column: amount
       nullable: false
+    status:
+      type: string
+      column: status
+      nullable: false
     createdAt:
       type: datetime
       column: created_at

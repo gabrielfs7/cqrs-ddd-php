@@ -5,7 +5,7 @@ namespace Sample\Domain\Command;
 use Sample\Domain\ValueObject\OrderId;
 use Sample\Domain\ValueObject\OrderStatus;
 
-final class UpdateOrderCommand implements CommandInterface
+final class UpdateOrderCommand extends AbstractSaveOrderCommand
 {
     /** @var string */
     private $orderId;
